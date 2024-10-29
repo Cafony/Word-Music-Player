@@ -14,82 +14,74 @@ namespace Word_Music_Player
 {
     public partial class Player : Form
     {
-        private string _filePath= null;
-        
-        
-        private bool _isPlaying;
+
+        public static  string _filePath;
+
+        public bool _isPlaying;
         myPlayerFuntions _myPlayerFuntions;
+        
+        
         
         public Player()
         {
             InitializeComponent();
             _myPlayerFuntions = new myPlayerFuntions();
+            
         
         }
 
         private void ResetPlayerValues()
         {
             trackBarTranspose.Value = 0;
+            labelTransposeValue.Text = "0";
             trackBarEqGain.Value = 0;
+            labelGain.Text = "0";
             trackBarSpeed.Value = 0;
+            trackBarSpeed.Text = "0";   
             buttonPlay.Text = "Play";
             checkBoxStereo.Checked = true;
         }
 
         // Play File that was send from Playlist
 
+        #region PLAY FILE MUSIC
         private void buttonOpenMp3_Click(object sender, EventArgs e)
         {
-            ResetPlayerValues();
-            _myPlayerFuntions.StopFreeMP3();
+            ResetPlayerValues();            
+
             OpenFileDialog openFile = new OpenFileDialog();
             openFile.Multiselect = false;
             openFile.Title = "Open";
             openFile.Filter = "Musicas |*.mp3;*.wma;*.wav";
 
             if (openFile.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {                    
+            {                  
                     _filePath = openFile.FileName;
-                    //_myPlayerFuntions.CreateStream(_filePath);                    
-                    FileToPlay(_filePath);
-                }
-                catch { MessageBox.Show("File not valid"); }
+                    _myPlayerFuntions.CreateStream(_filePath);                      
             }
 
         }
 
-        
-        public void FilePath ( string file)
-        {
-
-        }
-
-
         public void FileToPlay(string file)
         {
-            if (!string.IsNullOrEmpty(file)) // Check if file is not null or empty
-            {
-                if(_filePath == null)
-                {
                 _filePath = file;
-                MessageBox.Show(_filePath+" função FileToPlay");
-                }
+
+            if(!_isPlaying)
+            {
+                labelName.Text = _filePath;
                 _myPlayerFuntions.CreateStream(_filePath);
             }
             else
             {
-                MessageBox.Show("File path is invalid.");
+                _myPlayerFuntions.StopMP3();
+                _isPlaying = false;
             }
         }
-
         private void buttonPlay_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(_filePath);
+            labelName.Text = _filePath;           
 
-            if (!string.IsNullOrEmpty(_filePath)) // Double check _filePath is valid
-            {
+               
                 if (!_isPlaying)
                 {
                     checkBoxStereo.Checked = true;
@@ -105,21 +97,17 @@ namespace Word_Music_Player
                     buttonPlay.Text = "Play";
                    
                 }
-            }
-            else {  MessageBox.Show("Please load music file.");}
+
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
         {
-            labelName.Text = _filePath;
-            if(_filePath != null)
-            {
+
                 _myPlayerFuntions.StopMP3();
                 buttonPlay.Text = "Play";
                 _isPlaying = false;
                 trackBarPosition.Value = 0;
-            }
-            else { return; }
+
         }
 
         private void trackBarPosition_Scroll(object sender, EventArgs e)
@@ -129,6 +117,8 @@ namespace Word_Music_Player
                     _myPlayerFuntions.trackbarScrollPosition(trackBarPosition.Value, trackBarPosition.Maximum);
             }
         }
+
+        #endregion  
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -181,21 +171,23 @@ namespace Word_Music_Player
 
         private void trackBarTranspose_Scroll(object sender, EventArgs e)
         {
+            labelName.Text=_isPlaying.ToString();
+
             if (_isPlaying)
-            {
-                _myPlayerFuntions.PitchMP3(trackBarTranspose.Value);
-                labelTransposeValue.Text=trackBarTranspose.Value.ToString();
-            }
-            else
             {
                 trackBarTranspose.Value = 0;
                 MessageBox.Show("No music playing");
+            }
+            else
+            {
+                _myPlayerFuntions.PitchMP3(trackBarTranspose.Value);
+                labelTransposeValue.Text=trackBarTranspose.Value.ToString();
             }
         }
 
         private void trackBarSpeed_Scroll(object sender, EventArgs e)
         {
-            if (_isPlaying)
+            if (!_isPlaying)
             {
                 _myPlayerFuntions.SpeedMP3(trackBarSpeed.Value);
                 labelSpeedValue.Text=trackBarSpeed.Value.ToString();

@@ -37,7 +37,6 @@
             this.buttonSaveList = new System.Windows.Forms.Button();
             this.labelMusicPlaylist = new System.Windows.Forms.Label();
             this.buttonLoadPlaylist = new System.Windows.Forms.Button();
-            this.buttonSend = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBoxPlaylist
@@ -55,6 +54,7 @@
             this.listBoxPlaylist.SelectedIndexChanged += new System.EventHandler(this.listBoxPlaylist_SelectedIndexChanged);
             this.listBoxPlaylist.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.listBoxPlaylist_Format);
             this.listBoxPlaylist.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBoxPlaylist_KeyDown);
+            this.listBoxPlaylist.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBoxPlaylist_MouseDoubleClick);
             // 
             // buttonAddFiles
             // 
@@ -139,17 +139,6 @@
             this.buttonLoadPlaylist.UseVisualStyleBackColor = true;
             this.buttonLoadPlaylist.Click += new System.EventHandler(this.buttonLoadPlaylist_Click);
             // 
-            // buttonSend
-            // 
-            this.buttonSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSend.Location = new System.Drawing.Point(95, 425);
-            this.buttonSend.Name = "buttonSend";
-            this.buttonSend.Size = new System.Drawing.Size(75, 29);
-            this.buttonSend.TabIndex = 10;
-            this.buttonSend.Text = "Send";
-            this.buttonSend.UseVisualStyleBackColor = true;
-            this.buttonSend.Click += new System.EventHandler(this.buttonSend_Click);
-            // 
             // Playlist
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -157,7 +146,6 @@
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(268, 552);
             this.ControlBox = false;
-            this.Controls.Add(this.buttonSend);
             this.Controls.Add(this.buttonLoadPlaylist);
             this.Controls.Add(this.labelMusicPlaylist);
             this.Controls.Add(this.buttonSaveList);
@@ -189,6 +177,5 @@
         private System.Windows.Forms.Button buttonSaveList;
         private System.Windows.Forms.Label labelMusicPlaylist;
         private System.Windows.Forms.Button buttonLoadPlaylist;
-        private System.Windows.Forms.Button buttonSend;
     }
 }

@@ -117,17 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="contextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>132, 17</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="button1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="buttonDown.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAT
-        NwAAEzcBK0sa/wAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAD8SURBVDhPtZTL
+        NQAAEzUBVLXZdgAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAD8SURBVDhPtZTL
         DoIwEEVbKGiQhyuNGtaywkR26v//1tiZMvIqFRAXpzw6c7gpTQUAEMfDEYSQIIU3DymhuBZaYTw0nE8X
         fSfsDd+QHgUpyxtJRZ7nJMOXBkvTCFxv+jGbvmw2W2vxEkgYRTt6WLR+NdzbEa6BVTgnab92IOQCXmQ3
         XNtIRxMGKoQs3UOSpJAm2YAszcCTfkeGWBMqFdDEFDAp7kOnEL/MDS6qe4VGt5ClzTq54XruHQh5ElNO
@@ -138,7 +132,7 @@
   <data name="buttonUp.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAAulJREFUOE+NVM1PE1EQn/d2S6ygBTER5MOTIm6BVntRgpJCYuINRdIWawkRSUSK
+        vAAADrwBlbxySQAAAulJREFUOE+NVM1PE1EQn/d2S6ygBTER5MOTIm6BVntRgpJCYuINRdIWawkRSUSK
         IF6oLSlQUkMpiSh4Ew78D3rRkx49mHAwQDQmejEG4wfhoyzOvN3FdlvFwy9v38xvfjNv5r2FicQE9PTc
         Pmq1Wj8CsG0CA77zP0CuyhhPMcbWWlouX5x+NA0QDof3VZRXPAMAFUkpQcoOJpthN/uxCFAL8gved3V1
         nQK3230DDZiNwNKJxl6lNf2bVhNHxBcXH34JdXV1MTRsmYk6DIENSZK/U5Bmy8nBFT6A0+mM4gYFBdkE
@@ -153,7 +147,4 @@
         EAe4HwpJ9AJCQyEIBAJOv9/vQpzxX8N1LxAP0d/fb0smkxCJROTfizawSEZjFbQAAAAASUVORK5CYII=
 </value>
   </data>
-  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>32</value>
-  </metadata>
 </root>

@@ -18,11 +18,11 @@ namespace Word_Music_Player
 {
     internal class myPlayerFuntions
     {
-        private int _stream;
-        private int _mixer;
-        private int _streamInitial;
-        private int _mono;
-        private int _streamEQ;
+        private static  int _stream;
+        private static int _mixer;
+        private static int _streamInitial;
+        private static  int _mono;
+        private static int _streamEQ;
         private float _fGainValue;
         private float _freqValue;
         
@@ -37,32 +37,28 @@ namespace Word_Music_Player
 
         public void CreateStream(string filePath)
         {
-            
-
+            Bass.Free();
             Bass.Init();            
             _streamInitial = Bass.CreateStream(filePath, 0, 0, BassFlags.Decode);                       
             _stream = BassFx.TempoCreate(_streamInitial, BassFlags.FxFreeSource);
+
+        }
+        public void PlayStream()
+        {   
+            Bass.ChannelPlay(_stream);            
         }
 
-        public void StopFreeMP3() { Bass.Free(); }
+        public void FreeStream() { Bass.Free(); }
         public void PauseStream() 
         {
             Bass.ChannelPause(_stream);
             //Bass.ChannelPause(_mixer);
         }
-        public void PlayStream()
-        {            
-            //Bass.ChannelPlay(_streamInicial);
-            Bass.ChannelPlay(_stream);
-            //Bass.ChannelPlay(_mixer);
-        }
         public void StopMP3() 
         {
-            if(_stream!=0)
-            {
                 Bass.ChannelStop(_stream);  
                 Bass.ChannelSetPosition(_stream, 0);
-            }
+         
         }
 
         

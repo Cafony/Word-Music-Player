@@ -14,12 +14,16 @@ namespace Word_Music_Player
     public partial class Playlist : Form
     {
         private Player _Player;
+        private myPlayerFuntions _myPlayerFuntions;
+
+        //private myPlayerFuntions _myPlayerFuntions;
         private string _playlistDefaultPath = System.IO.Path.Combine(Application.StartupPath, "playlist.txt");
 
         public Playlist()
         {
             InitializeComponent();
             _Player = new Player();
+            _myPlayerFuntions = new myPlayerFuntions();
         }
 
         #region BUTTONS LOAD SAVE PLAYLIST
@@ -152,17 +156,32 @@ namespace Word_Music_Player
         {
              
         }
+
         private void listBoxPlaylist_MouseClick(object sender, MouseEventArgs e)
         {
+            try
+            {
             string file = listBoxPlaylist.SelectedItem.ToString();
             labelMusicPlaylist.Text = file;
-            _Player.FileToPlay(file);
-            //_Player.FilePath(file);
+            }
+            catch { MessageBox.Show("Select Music"); }
+        }
+            
+        private void PlayListboxFile()
+        {
+            _myPlayerFuntions.StopMP3();
+                 
+            _myPlayerFuntions.CreateStream(listBoxPlaylist.SelectedItem.ToString());
+            _myPlayerFuntions.PlayStream();
+            _Player._isPlaying = true;
+        }
+            
+        private void listBoxPlaylist_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            PlayListboxFile();
         }
 
         #endregion
-
-
 
         private void listBoxPlaylist_Format(object sender, ListControlConvertEventArgs e)
         {
@@ -180,6 +199,12 @@ namespace Word_Music_Player
                     listBoxPlaylist.Items.Remove(listBoxPlaylist.SelectedItems[0]);
                 }
             }
+            //Play file when ENTER
+            if(e.KeyCode == Keys.Enter)
+            {
+                PlayListboxFile();
+            }
+
         }
 
         #endregion
@@ -209,7 +234,7 @@ namespace Word_Music_Player
 
         private void buttonSend_Click(object sender, EventArgs e)
         {
-            _Player.FileToPlay(listBoxPlaylist.SelectedItem.ToString());
         }
+
     }
 }

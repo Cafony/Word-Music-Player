@@ -220,6 +220,7 @@
             // 
             // labelGain
             // 
+            this.labelGain.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.labelGain.AutoSize = true;
             this.labelGain.Location = new System.Drawing.Point(789, 37);
             this.labelGain.Name = "labelGain";
@@ -229,6 +230,7 @@
             // 
             // labelFreq
             // 
+            this.labelFreq.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.labelFreq.AutoSize = true;
             this.labelFreq.Location = new System.Drawing.Point(789, 81);
             this.labelFreq.Name = "labelFreq";
@@ -238,6 +240,7 @@
             // 
             // labelVolume
             // 
+            this.labelVolume.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.labelVolume.AutoSize = true;
             this.labelVolume.Location = new System.Drawing.Point(949, 122);
             this.labelVolume.Name = "labelVolume";

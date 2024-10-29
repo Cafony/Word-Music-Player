@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Word_Music_Player
 {
-    public partial class ChordEditor : Form
+    public partial class Player2 : Form
     {
-        public ChordEditor()
+        public Player2()
         {
             InitializeComponent();
         }
