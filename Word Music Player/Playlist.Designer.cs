@@ -36,13 +36,11 @@
             this.buttonClearList = new System.Windows.Forms.Button();
             this.buttonSaveList = new System.Windows.Forms.Button();
             this.labelMusicPlaylist = new System.Windows.Forms.Label();
-            this.buttonLoadPlaylist = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBoxPlaylist
             // 
-            this.listBoxPlaylist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.listBoxPlaylist.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listBoxPlaylist.FormattingEnabled = true;
             this.listBoxPlaylist.Location = new System.Drawing.Point(11, 12);
@@ -59,9 +57,9 @@
             // buttonAddFiles
             // 
             this.buttonAddFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddFiles.Location = new System.Drawing.Point(14, 425);
+            this.buttonAddFiles.Location = new System.Drawing.Point(11, 425);
             this.buttonAddFiles.Name = "buttonAddFiles";
-            this.buttonAddFiles.Size = new System.Drawing.Size(75, 29);
+            this.buttonAddFiles.Size = new System.Drawing.Size(110, 29);
             this.buttonAddFiles.TabIndex = 1;
             this.buttonAddFiles.Text = "Add Music";
             this.buttonAddFiles.UseVisualStyleBackColor = true;
@@ -70,11 +68,11 @@
             // buttonRemoveListIten
             // 
             this.buttonRemoveListIten.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonRemoveListIten.Location = new System.Drawing.Point(14, 460);
+            this.buttonRemoveListIten.Location = new System.Drawing.Point(146, 425);
             this.buttonRemoveListIten.Name = "buttonRemoveListIten";
-            this.buttonRemoveListIten.Size = new System.Drawing.Size(75, 29);
+            this.buttonRemoveListIten.Size = new System.Drawing.Size(110, 29);
             this.buttonRemoveListIten.TabIndex = 3;
-            this.buttonRemoveListIten.Text = "Remove";
+            this.buttonRemoveListIten.Text = "Remove Music";
             this.buttonRemoveListIten.UseVisualStyleBackColor = true;
             this.buttonRemoveListIten.Click += new System.EventHandler(this.buttonRemoveListIten_Click);
             // 
@@ -84,9 +82,9 @@
             this.labelSearch.AutoSize = true;
             this.labelSearch.Location = new System.Drawing.Point(11, 523);
             this.labelSearch.Name = "labelSearch";
-            this.labelSearch.Size = new System.Drawing.Size(66, 13);
+            this.labelSearch.Size = new System.Drawing.Size(72, 13);
             this.labelSearch.TabIndex = 4;
-            this.labelSearch.Text = "Search MP3";
+            this.labelSearch.Text = "Search Music";
             // 
             // textBoxSearchMp3
             // 
@@ -100,9 +98,9 @@
             // buttonClearList
             // 
             this.buttonClearList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonClearList.Location = new System.Drawing.Point(95, 460);
+            this.buttonClearList.Location = new System.Drawing.Point(11, 460);
             this.buttonClearList.Name = "buttonClearList";
-            this.buttonClearList.Size = new System.Drawing.Size(75, 29);
+            this.buttonClearList.Size = new System.Drawing.Size(110, 29);
             this.buttonClearList.TabIndex = 6;
             this.buttonClearList.Text = "Clear List";
             this.buttonClearList.UseVisualStyleBackColor = true;
@@ -111,9 +109,9 @@
             // buttonSaveList
             // 
             this.buttonSaveList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSaveList.Location = new System.Drawing.Point(181, 460);
+            this.buttonSaveList.Location = new System.Drawing.Point(146, 460);
             this.buttonSaveList.Name = "buttonSaveList";
-            this.buttonSaveList.Size = new System.Drawing.Size(75, 29);
+            this.buttonSaveList.Size = new System.Drawing.Size(110, 29);
             this.buttonSaveList.TabIndex = 7;
             this.buttonSaveList.Text = "Save List";
             this.buttonSaveList.UseVisualStyleBackColor = true;
@@ -121,23 +119,13 @@
             // 
             // labelMusicPlaylist
             // 
+            this.labelMusicPlaylist.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.labelMusicPlaylist.AutoSize = true;
             this.labelMusicPlaylist.Location = new System.Drawing.Point(13, 496);
             this.labelMusicPlaylist.Name = "labelMusicPlaylist";
             this.labelMusicPlaylist.Size = new System.Drawing.Size(35, 13);
             this.labelMusicPlaylist.TabIndex = 8;
             this.labelMusicPlaylist.Text = "Music";
-            // 
-            // buttonLoadPlaylist
-            // 
-            this.buttonLoadPlaylist.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonLoadPlaylist.Location = new System.Drawing.Point(181, 425);
-            this.buttonLoadPlaylist.Name = "buttonLoadPlaylist";
-            this.buttonLoadPlaylist.Size = new System.Drawing.Size(75, 29);
-            this.buttonLoadPlaylist.TabIndex = 9;
-            this.buttonLoadPlaylist.Text = "Load List";
-            this.buttonLoadPlaylist.UseVisualStyleBackColor = true;
-            this.buttonLoadPlaylist.Click += new System.EventHandler(this.buttonLoadPlaylist_Click);
             // 
             // Playlist
             // 
@@ -146,7 +134,6 @@
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(268, 552);
             this.ControlBox = false;
-            this.Controls.Add(this.buttonLoadPlaylist);
             this.Controls.Add(this.labelMusicPlaylist);
             this.Controls.Add(this.buttonSaveList);
             this.Controls.Add(this.buttonClearList);
@@ -176,6 +163,5 @@
         private System.Windows.Forms.Button buttonClearList;
         private System.Windows.Forms.Button buttonSaveList;
         private System.Windows.Forms.Label labelMusicPlaylist;
-        private System.Windows.Forms.Button buttonLoadPlaylist;
     }
 }

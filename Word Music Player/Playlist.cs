@@ -111,6 +111,7 @@ namespace Word_Music_Player
         public void buttonSaveList_Click(object sender, EventArgs e)
         {
             SavePlaylist();
+            MessageBox.Show("Playlist saved!");
         }
 
         private void buttonClearList_Click(object sender, EventArgs e)

@@ -8,9 +8,8 @@ using System.Windows.Forms;
 namespace Word_Music_Player
 {
     internal class myTransposeChords
-    {
-        int semitones = 0;
-
+    {       
+        
         private readonly string[] indexToChord = new string[]
         { "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" };
 
@@ -45,15 +44,11 @@ namespace Word_Music_Player
         }  // FUNCAO FEITA POR MIM SE É LINHA DE ACORDES
 
         public string RemoveTabs(string _richtext)
-        {
-            
+        {   
             var tabLength = 6;
             var tabSpace = new string(' ', tabLength);
             string _text = _richtext.Replace("\t", tabSpace);
-
-            return _text;
-            
-
+            return _text;           
         }
 
         #region TRANSPOSE FUNTION 

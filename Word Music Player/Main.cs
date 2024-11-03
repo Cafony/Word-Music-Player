@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Spire.Doc;
+using Spire.Doc.Documents;
+using Spire.License;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,6 +11,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace Word_Music_Player
 {
@@ -16,22 +20,36 @@ namespace Word_Music_Player
         Playlist _Playlist;
         myOpenDocs _myOpenDocs;
         myTransposeChords _myTransposeChords;
+        myRecentOpenDocs _myRecentOpenDocs;
+
+        #region INICIALIZE PROGRAM
+        
         public string  _RichTextBoxMain => richTextBox1.Rtf;
         private string _filePathSave;
+        private string _richTextContent;
+        private string _color="Red"; // Color of Cifra Chords
+        public static int _spaceNumbers;
 
         public Main()
-        {
+        {            
             InitializeComponent();
-            AddPlayerToMain();
+            AddMp3PlayerToMain();
             AddPlaylistToMain();
             _Playlist = new Playlist();
             _myOpenDocs = new myOpenDocs();
-            _myTransposeChords = new myTransposeChords();
-            
+            _myTransposeChords = new myTransposeChords();        
+            //================================
+            _myRecentOpenDocs = new myRecentOpenDocs();
+            _myRecentOpenDocs.LoadRecentFiles();
+            UpdateRecentFilesMenu();
+            //==========================            
+            LoadAvailableFontNames();
+            LoadAvailableFontSizes();
         }
+        #endregion
 
         #region ADD FORMS TO MAIN WINDOWS
-        private void AddPlayerToMain()
+        private void AddMp3PlayerToMain()
         {
             Player player = new Player();
             player.TopLevel = false;
@@ -49,36 +67,36 @@ namespace Word_Music_Player
             panelRight.Controls.Add(playlist);
             playlist.Show();
         }
-
-        private void AddChordEditorToMain()
-        {
-
-
-        }
-
-
-        #endregion
-
         private void buttonPlaylist_Click(object sender, EventArgs e)
         {
-            
+            AddPlaylistToMain();
         }
 
         private void buttonChordEditor_Click(object sender, EventArgs e)
         {
-            AddChordEditorToMain();
+            panelRight.Controls.Clear();
+            panelChordEdit.Visible = true;
+            panelRight.Controls.Add(panelChordEdit);
         }
 
+
+
+        #endregion
+
+        #region FORM OPEN CLOSE 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            
+            _myRecentOpenDocs.SaveRecentFiles();
         }
 
         private void Main_FormClosed(object sender, FormClosedEventArgs e)
         {
         }
+        #endregion
+
         #region OPEN SAVE FILES MENU
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+
+        private void LoadDocument()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "OpenDocument (*.odt)|*.odt|Word (*.docx)|*.docx|Word (*.doc)|*.doc|Richtext (*.rtf)|*.rtf|Text File (*.txt)|*.txt";
@@ -96,12 +114,17 @@ namespace Word_Music_Player
                 {
                     MessageBox.Show("Error: ");
                 }
+                _myRecentOpenDocs.AddFilePath(_filePath);
+                UpdateRecentFilesMenu();
             }
         }
 
-        #endregion
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LoadDocument();
+        }
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveDocument()
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Word (*.docx)|*.docx|OpenDocument (*.odt)|*.odt|Word (*.doc)|*.doc|Richtext (*.rtf)|*.rtf|Text (*.txt)|*.txt";
@@ -123,48 +146,584 @@ namespace Word_Music_Player
                     MessageBox.Show("Erro: " + ex.Message);
                 }
             }
+
+        }
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveDocument();
+        }
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Clear();
         }
 
-        private void transposeToolStripMenuItem_Click(object sender, EventArgs e)
+        #endregion
+
+        #region RECENT OPEN FILES DOCS
+        private void recentDocsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (panelTranspose.Visible==false)
-            {
-            panelTranspose.Visible = true;
-            }
-            else
-            {
-                panelTranspose.Visible = false;
-            }
             
         }
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        private void UpdateRecentFilesMenu()
         {
-           }
+            recentDocsToolStripMenuItem.DropDownItems.Clear();
 
-        #region BUTTON TRANSPOSE UP DOWN
+            foreach(string filePath in _myRecentOpenDocs.GetRecentFiles())
+            {
+                var item = new ToolStripMenuItem(filePath);
+                
+                recentDocsToolStripMenuItem.DropDownItems.Add(item);
 
-        private void buttonUp_Click(object sender, EventArgs e)
+            }
+
+        }
+        private void recentDocsToolStripMenuItem_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            string _fileFromMenu = e.ClickedItem.Text;
+            labelDocName.Text = _fileFromMenu;
+            richTextBox1.Text= _myOpenDocs.OpenDocument(_fileFromMenu);
+        }
+
+        #endregion
+
+        #region CONVERT CHORDS MENU
+        private void radioButtonCifra_CheckedChanged(object sender, EventArgs e)
+        {
+            UndoSaveContent();
+            if(radioButtonCifra.Checked)
+            {
+                string line = richTextBox1.Text.Trim();
+                string output = myCifraFuntions.DoremiConvert(line);
+                richTextBox1.Text = output;
+            }
+            myCifraFuntions.ChangeTextColor(richTextBox1, _color);
+
+            
+        }
+
+        private void radioButtonDoremi_CheckedChanged(object sender, EventArgs e)
+        {
+            UndoSaveContent();
+            if(radioButtonDoremi.Checked)
+            {
+                string line = richTextBox1.Text;
+                string output = myCifraFuntions.CifraConvert(line);
+                richTextBox1.Text = output;
+            }
+            myCifraFuntions.ChangeTextColor(richTextBox1, _color);
+
+        }
+        #endregion
+
+        #region TRANSPOSE BUTTON
+        private void buttonDown_Click_1(object sender, EventArgs e)
+        {
+            int _value = -1;
+            string _noTabs = _myTransposeChords.RemoveTabs(richTextBox1.Text);
+            
+            string _text = _myTransposeChords.TransposeChords(_noTabs, _value);               
+            richTextBox1.Text = _text;
+            // Change Color of Chords
+            myCifraFuntions.ChangeTextColor(richTextBox1 , _color);
+
+        }
+
+        private void buttonUp_Click_1(object sender, EventArgs e)
         {
             int _value = 1;
             string _noTabs = _myTransposeChords.RemoveTabs(richTextBox1.Text);
             string _text = _myTransposeChords.TransposeChords(_noTabs,_value);
             richTextBox1.Text = _text;
-
+            myCifraFuntions.ChangeTextColor(richTextBox1, _color);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        #endregion
+
+        #region MENU EDIT CHORDS COLOR
+
+        private void checkRadioButtons()
         {
-            int _value = -1;
-            string _noTabs = _myTransposeChords.RemoveTabs(richTextBox1.Text);
-            string _text = _myTransposeChords.TransposeChords(_noTabs, _value);            
-            richTextBox1.Text = _text;
+            UndoSaveContent();
+
+            if (radioButtonBlue.Checked)
+            {
+                _color = radioButtonBlue.Text;                
+                myCifraFuntions.ChangeTextColor(richTextBox1, _color);
+            }
+            else if (radioButtonGreen.Checked)
+            {
+                _color = "LimeGreen";
+                myCifraFuntions.ChangeTextColor(richTextBox1, _color);
+            }
+            else if (radioButtonRed.Checked)
+            {
+                _color = radioButtonRed.Text;
+                myCifraFuntions.ChangeTextColor(richTextBox1, _color);
+            }
+            else if (radioButtonBlack.Checked)
+            {
+                _color = radioButtonBlack.Text;
+                myCifraFuntions.ChangeTextColor(richTextBox1, _color);
+            }
+            else if (radioButtonRose.Checked)
+            {
+                _color = "Violet";
+                myCifraFuntions.ChangeTextColor(richTextBox1 , _color);
+            }
+            else if(radioButtonYellow.Checked)
+            {
+                _color = "Gold";
+                myCifraFuntions.ChangeTextColor(richTextBox1, _color);
+            }
+        }
+        private void radioButtonBlue_CheckedChanged(object sender, EventArgs e)
+        {
+            checkRadioButtons();
+        }
+
+        private void radioButtonRed_CheckedChanged(object sender, EventArgs e)
+        {
+            checkRadioButtons();
+        }
+
+
+        private void radioButtonBlack_CheckedChanged(object sender, EventArgs e)
+        {
+            checkRadioButtons();
+        }
+
+        private void radioButtonGreen_CheckedChanged(object sender, EventArgs e)
+        {
+            checkRadioButtons();
+        }
+        private void radioButtonRose_CheckedChanged(object sender, EventArgs e)
+        {
+            checkRadioButtons();
+        }
+
+        private void radioButtonYellow_CheckedChanged(object sender, EventArgs e)
+        {
+            checkRadioButtons();
+        }
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            int _size = Convert.ToInt32(numericUpDownSize.Value);
+            myCifraFuntions.ChangeTextSize(richTextBox1, _size);
+        }
+
+        #endregion
+
+        #region REMOVE ADD SPACES
+        private void radioButtonRemoveSpaces_CheckedChanged(object sender, EventArgs e)
+        {
+            myCifraFuntions.RemoveSpaces(richTextBox1);
+            myCifraFuntions.ChangeTextColor(richTextBox1, _color);
+            radioButtonRemoveSpaces.Checked = false;
+        }
+        private void radioButtonAdd_Spaces_CheckedChanged(object sender, EventArgs e)
+        {
+            myCifraFuntions.AddSpaces(richTextBox1);
+            myCifraFuntions.ChangeTextColor(richTextBox1, _color);
+            radioButtonAdd_Spaces.Checked = false;
+        }
+
+        #endregion
+
+        #region UNDO
+        private void UndoSaveContent()
+        {
+            // Store the RichTextBox content in memory
+            _richTextContent = richTextBox1.Text;
+        }
+                
+
+        private void Undo()
+        {
+            richTextBox1.Text= _richTextContent;
+            myCifraFuntions.ChangeTextColor(richTextBox1 , _color); 
         }
         #endregion
 
-        private void playlistToolStripMenuItem_Click(object sender, EventArgs e)
+        #region CONVERT TO CHORDPRO LYRICS
+
+        private void buttonLyricsToChordpro_Click(object sender, EventArgs e)
         {
-            AddPlaylistToMain();
+            UndoSaveContent();
+
+            if (richTextBox1.SelectedText == String.Empty)
+            {
+                MessageBox.Show("Select lyrics with chord to convert to Chorpro Format");
+                radioButtonLyricsChordPro.Checked = false;
+            }
+            else
+            {
+                string inputText = richTextBox1.SelectedText;
+                //string chordProText = chordproConvert.ConvertToChordPro2(inputText);
+                string chordProText = myChordproConvert.ConvertLyricsWithChordsToChordPro(inputText);
+                richTextBox1.SelectedText = chordProText;
+                radioButtonLyricsChordPro.Checked = false;
+            }
+
         }
+
+        private void buttonChordproToLyrics_Click(object sender, EventArgs e)
+        {
+            UndoSaveContent();
+
+            if (richTextBox1.SelectedText == String.Empty)
+            {
+                MessageBox.Show("Select lyrics with chord to convert to Chorpro Format");
+                radioButtonLyricsChordPro.Checked = false;
+            }
+            else
+            {
+                string inputText = richTextBox1.SelectedText;
+                //string chordProText = chordproConvert.ConvertToChordPro2(inputText);
+                string chordProText = myChordproConvert.ConvertChordProToLyricsWithChords(inputText);
+                richTextBox1.SelectedText = chordProText;
+                radioButtonLyricsChordPro.Checked = false;
+            }
+        }
+
+        #endregion
+
+        #region COPY PASTE CHORDS
+        private void radioButtonCopyChord_CheckedChanged(object sender, EventArgs e)
+        {
+            UndoSaveContent();
+            if (radioButtonCopyChord.Checked)
+            {
+                try
+                {
+                    Clipboard.SetText(richTextBox1.SelectedText);
+                }
+                catch
+                {
+                    MessageBox.Show("Select lyrics with chords to copy. (remember how many lines you copy)");
+                }
+            }
+            radioButtonCopyChord.Checked = false;
+        }
+
+        private void radioButtonPasteChord_CheckedChanged(object sender, EventArgs e)
+        {
+            UndoSaveContent();
+            if (radioButtonPasteChord.Checked)
+            {
+                if (richTextBox1.SelectionLength != 0)
+                {
+                   richTextBox1.Text= myEditChords.copyChords(richTextBox1);
+                }
+                else
+                {
+                    MessageBox.Show("Select the lyrics to where you want to copy the chords. Remenber choose the same number of lyrics lines.");
+                }
+            }
+                radioButtonPasteChord.Checked = false;
+        }
+        #endregion
+
+        #region MENU EDIT PREFERENCES
+
+        private void preferenciesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            myPreferences _preferences = new myPreferences();
+            _preferences.ShowDialog();
+        }
+
+        #endregion
+
+        #region MENU RIGHT CLICK JOIN LYRICS
+        private void joinLyrcsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UndoSaveContent();
+            string selectedText = richTextBox1.SelectedText;            
+            string newText = myCifraFuntions.JoinTextLinesInTwo(selectedText);
+            richTextBox1.SelectedText = newText;
+            
+        }
+        private void joinLyricsWithChordsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UndoSaveContent();
+            // Check if there is selected text in the RichTextBox
+            if (!string.IsNullOrEmpty(richTextBox1.SelectedText))
+            {
+                // Copy selected text to clipboard
+                Clipboard.SetText(richTextBox1.SelectedText);
+
+                // Use TextConverter to convert the selected text
+                string convertedText = myCifraFuntions.JoinLyricsWithChords(richTextBox1.SelectedText);
+                
+                richTextBox1.SelectedText = convertedText;                
+            }
+            else
+            {
+                MessageBox.Show("Please select text in the RichTextBox first.");
+            }
+            myCifraFuntions.ChangeTextColor(richTextBox1, _color);
+        }
+        private void copyChordsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UndoSaveContent();
+
+                try
+                {
+                    Clipboard.SetText(richTextBox1.SelectedText);
+                }
+                catch
+                {
+                    MessageBox.Show("Select lyrics with chords to copy. (remember how many lines you copy)");
+                }
+            
+        }
+
+        private void pasteChordsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UndoSaveContent();
+
+                if (richTextBox1.SelectionLength != 0)
+                {
+                    richTextBox1.Text = myEditChords.copyChords(richTextBox1);
+                }
+                else
+                {
+                    MessageBox.Show("Select the lyrics to where you want to copy the chords. Remenber choose the same number of lyrics lines.");
+                }
+            myCifraFuntions.ChangeTextColor(richTextBox1, _color);
+        }
+
+        #endregion
+
+        #region MENU JOIN LYRICS
+        private void radioButtonJoinLyrics_CheckedChanged(object sender, EventArgs e)
+        {
+            UndoSaveContent();
+            string selectedText = richTextBox1.SelectedText;
+            string newText = myCifraFuntions.JoinTextLinesInTwo(selectedText);
+            richTextBox1.SelectedText = newText;
+        }
+
+        private void radioButtonJoinLyricsChords_CheckedChanged(object sender, EventArgs e)
+        {
+            UndoSaveContent();
+            // Check if there is selected text in the RichTextBox
+            if (!string.IsNullOrEmpty(richTextBox1.SelectedText))
+            {
+                // Copy selected text to clipboard
+                Clipboard.SetText(richTextBox1.SelectedText);
+
+                // Use TextConverter to convert the selected text
+                string convertedText = myCifraFuntions.JoinLyricsWithChords(richTextBox1.SelectedText);
+
+                richTextBox1.SelectedText = convertedText;
+            }
+            else
+            {
+                MessageBox.Show("Please select text in the RichTextBox first.");
+            }
+            myCifraFuntions.ChangeTextColor(richTextBox1, _color);
+        }
+        #endregion
+
+        #region CHORDPRO CONVERT
+        private void radioButtonChordproToLyrics_CheckedChanged(object sender, EventArgs e)
+        {
+            UndoSaveContent();
+
+
+                string inputText = richTextBox1.SelectedText;
+                
+                string chordProText = myCifraFuntions.ConvertChordproToLyrics(inputText);
+                richTextBox1.SelectedText = chordProText;
+                radioButtonLyricsChordPro.Checked = false;
+            
+
+            radioButtonChordproToLyrics.Checked = false;
+        }
+
+        private void radioButtonLyricsToChordpro_CheckedChanged(object sender, EventArgs e)
+        {
+            UndoSaveContent();
+            if (richTextBox1.SelectedText == String.Empty)
+            {
+                MessageBox.Show("Select Lyrics with chord to convert to Chordpro");
+                radioButtonChordpro.Checked = false;
+
+            }
+            else
+            {
+                if (richTextBox1.SelectedText.Contains("["))
+                {
+                    string chordProInput = richTextBox1.SelectedText;
+                    //string formattedLyrics = myCifraFuntions.ConvertLyricsToChordPro(chordProInput);
+                    string formattedLyrics = myCifraFuntions.ConvertLyricsToChordpro(chordProInput);
+
+                    richTextBox1.SelectedText = formattedLyrics;
+                    radioButtonChordpro.Checked = false;
+                }
+                else
+                {
+                    MessageBox.Show("Lyrics are not in Chordpro Format" + "\n" + "(Chord inside brakets)" + "\n" + "Exemple:" + "\n" + "Happy birt[C]hday to you[G7]");
+                    radioButtonChordpro.Checked = false;
+
+                }
+
+            }
+
+            radioButtonLyricsToChordpro.Checked = false;
+
+        }
+        #endregion
+
+        #region MENU TOP FONTS SIZE LOAD SAVE NEW
+        public void LoadAvailableFontSizes()
+        {
+            // Add some common font sizes
+            int[] fontSizes = { 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72 };
+
+            foreach (int size in fontSizes)
+            {
+                ComboBoxTextSize.Items.Add(size);
+            }
+        }
+
+        public void LoadAvailableFontNames()
+        {
+            string[] fontNames = { "Microsoft Sans Serif", "Helvetica", "Calibri", "Garamond", "Times New Roman", "Futura", "Arial", "Cambria", "Verdana", "Rockwell", "Franklin Gothic" };
+
+            foreach (string fontName in fontNames)
+            {
+                ComboBoxFont.Items.Add(fontName);
+            }
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (richTextBox1.SelectedText == String.Empty)
+            {
+                string selectedFont = ComboBoxFont.SelectedItem.ToString();
+                richTextBox1.Font = new Font(selectedFont, richTextBox1.Font.Size);
+            }
+            else
+            {
+                string selectedFont = ComboBoxFont.SelectedItem.ToString();
+                richTextBox1.SelectionFont = new Font(selectedFont, richTextBox1.SelectionFont.Size, richTextBox1.SelectionFont.Style);
+            }
+            
+        }
+
+        private void ComboBoxTextSize_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (richTextBox1.SelectedText == String.Empty)
+            {
+                int size = Convert.ToInt32(ComboBoxTextSize.SelectedItem);
+
+                richTextBox1.Font = new Font(richTextBox1.Font.FontFamily, size);
+            }
+            else
+            {
+                int fontSize = Convert.ToInt32(ComboBoxTextSize.SelectedItem);
+                richTextBox1.SelectionFont = new Font(richTextBox1.Font.FontFamily, fontSize, richTextBox1.SelectionFont.Style);
+            }
+            
+        }
+        private void buttonOpenDoc_Click(object sender, EventArgs e)
+        {
+            LoadDocument();
+        }
+        private void buttonSaveDoc_Click(object sender, EventArgs e)
+        {
+            SaveDocument();
+        }
+        private void buttonNewDoc_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Clear();
+        }
+        private void buttonCopyText_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(richTextBox1.Text))
+            {
+                Clipboard.SetText(richTextBox1.Text, TextDataFormat.Text);
+            }
+            else
+            {
+                MessageBox.Show("There is not text to copy");
+            }
+            
+        }
+        private void buttonPaste_Click(object sender, EventArgs e)
+        {
+            if (Clipboard.ContainsText(TextDataFormat.Text))
+            {
+                richTextBox1.Text=Clipboard.GetText(TextDataFormat.Text);
+            }
+            else
+            {
+                MessageBox.Show("There is not text in memory");
+            }
+        }
+        private void button_Undo_Click(object sender, EventArgs e)
+        {
+            Undo();
+        }
+        private void buttonTextLeft_Click(object sender, EventArgs e)
+        {
+            if (richTextBox1.SelectionLength > 0)
+            {
+
+                // Align selected text to the right
+                richTextBox1.SelectionAlignment = System.Windows.Forms.HorizontalAlignment.Left;
+
+            }
+            else
+            {
+                // Align entire text to the right
+                richTextBox1.SelectAll();
+                richTextBox1.SelectionAlignment = System.Windows.Forms.HorizontalAlignment.Left;
+                richTextBox1.DeselectAll();
+            }
+        }
+
+        private void buttonTextCenter_Click(object sender, EventArgs e)
+        {
+            if (richTextBox1.SelectionLength > 0)
+            {
+
+                // Align selected text to the right
+                richTextBox1.SelectionAlignment = System.Windows.Forms.HorizontalAlignment.Center;
+
+            }
+            else
+            {
+                // Align entire text to the right
+                richTextBox1.SelectAll();
+                richTextBox1.SelectionAlignment = System.Windows.Forms.HorizontalAlignment.Center;
+                richTextBox1.DeselectAll();
+            }
+        }
+
+        private void buttonTextRight_Click(object sender, EventArgs e)
+        {
+            if (richTextBox1.SelectionLength > 0)
+            {
+
+                // Align selected text to the right
+                richTextBox1.SelectionAlignment = System.Windows.Forms.HorizontalAlignment.Right;
+
+            }
+            else
+            {
+                // Align entire text to the right
+                richTextBox1.SelectAll();
+                richTextBox1.SelectionAlignment = System.Windows.Forms.HorizontalAlignment.Right;
+                richTextBox1.DeselectAll();
+            }
+        }
+
+
+        #endregion
+
     }
 }

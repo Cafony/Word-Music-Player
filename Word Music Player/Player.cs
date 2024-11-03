@@ -16,7 +16,7 @@ namespace Word_Music_Player
     {
 
         public static  string _filePath;
-
+        private float _volume;
         public bool _isPlaying;
         myPlayerFuntions _myPlayerFuntions;
         
@@ -44,7 +44,7 @@ namespace Word_Music_Player
 
         // Play File that was send from Playlist
 
-        #region PLAY FILE MUSIC
+        #region PLAY FILE MUSIC VOLUME
         private void buttonOpenMp3_Click(object sender, EventArgs e)
         {
             ResetPlayerValues();            
@@ -57,7 +57,8 @@ namespace Word_Music_Player
             if (openFile.ShowDialog() == DialogResult.OK)
             {                  
                     _filePath = openFile.FileName;
-                    _myPlayerFuntions.CreateStream(_filePath);                      
+                    _myPlayerFuntions.CreateStream(_filePath);
+                    labelName.Text = _filePath;
             }
 
         }
@@ -78,10 +79,7 @@ namespace Word_Music_Player
             }
         }
         private void buttonPlay_Click(object sender, EventArgs e)
-        {
-            labelName.Text = _filePath;           
-
-               
+        {                             
                 if (!_isPlaying)
                 {
                     checkBoxStereo.Checked = true;
@@ -94,10 +92,8 @@ namespace Word_Music_Player
                 {
                     _myPlayerFuntions.PauseStream();
                     _isPlaying = false;
-                    buttonPlay.Text = "Play";
-                   
+                    buttonPlay.Text = "Play";                   
                 }
-
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
@@ -117,14 +113,18 @@ namespace Word_Music_Player
                     _myPlayerFuntions.trackbarScrollPosition(trackBarPosition.Value, trackBarPosition.Maximum);
             }
         }
+        private void trackBarVolume_Scroll(object sender, EventArgs e)
+        {
+            // Define value by percentage
+            _volume = (float)trackBarVolume.Value / trackBarVolume.Maximum;            
+            myPlayerFuntions.volumeControl(_volume);            
+        }
 
         #endregion  
 
         private void timer1_Tick(object sender, EventArgs e)
-        {
-            
-         _myPlayerFuntions.trackbarPosition(trackBarPosition,trackBarPosition.Maximum);
-            
+        {            
+         _myPlayerFuntions.trackbarPosition(trackBarPosition,trackBarPosition.Maximum);            
         }
 
         #region MONO LEFT STERO MONO RIGHT
@@ -250,6 +250,7 @@ namespace Word_Music_Player
             _myPlayerFuntions.Equalizer(fGain, freq);
         }
         #endregion
+
 
     }
 }

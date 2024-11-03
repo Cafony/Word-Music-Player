@@ -43,6 +43,7 @@ namespace Word_Music_Player
             _stream = BassFx.TempoCreate(_streamInitial, BassFlags.FxFreeSource);
 
         }
+
         public void PlayStream()
         {   
             Bass.ChannelPlay(_stream);            
@@ -157,10 +158,6 @@ namespace Word_Music_Player
         public void PlayMono(bool useLeftChannel, bool stereo = false)
         {
             // Create a mono stream
-            
-
-
-
         }
 
         public void PlayLeft()
@@ -301,5 +298,17 @@ namespace Word_Music_Player
         }
         #endregion
 
+        #region VOLUME BUTTON
+
+        public static void volumeControl(float volume)
+        {
+            // Volume levels 0 to 64 max
+            //Bass.ChannelSetAttribute(_stream, ChannelAttribute.MusicVolumeGlobal, volume);
+            Bass.ChannelSetAttribute(_stream, ChannelAttribute.Volume, volume);
+
+
+            #endregion
+
+        }
     }
 }

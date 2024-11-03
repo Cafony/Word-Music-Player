@@ -128,12 +128,13 @@
             // 
             this.trackBarVolume.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBarVolume.Location = new System.Drawing.Point(949, 87);
-            this.trackBarVolume.Maximum = 100;
+            this.trackBarVolume.Maximum = 64;
             this.trackBarVolume.Name = "trackBarVolume";
             this.trackBarVolume.Size = new System.Drawing.Size(119, 45);
             this.trackBarVolume.TabIndex = 6;
             this.trackBarVolume.TickFrequency = 10;
-            this.trackBarVolume.Value = 20;
+            this.trackBarVolume.Value = 30;
+            this.trackBarVolume.Scroll += new System.EventHandler(this.trackBarVolume_Scroll);
             // 
             // checkBoxRight
             // 
