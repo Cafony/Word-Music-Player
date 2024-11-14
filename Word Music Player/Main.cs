@@ -13,6 +13,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
+using ManagedBass;
+using ManagedBass.Fx;
+using ManagedBass.Mix;
+
 
 
 namespace Word_Music_Player
@@ -35,8 +39,7 @@ namespace Word_Music_Player
         public static int _spaceNumbers;
 
         public Main()
-        {
-            
+        {            
             InitializeComponent();
             AddMp3PlayerToMain();
             AddPlaylistToMain();
@@ -577,7 +580,8 @@ namespace Word_Music_Player
         #region MENU TOP FONTS SIZE LOAD SAVE NEW
         private void buttonRemoveFormat_Click(object sender, EventArgs e)
         {
-            richTextBox1.Clear();
+            string _text = richTextBox1.Text;
+            richTextBox1.Text = _text;
         }
         public void LoadAvailableFontSizes()
         {
@@ -652,9 +656,15 @@ namespace Word_Music_Player
             try
             {
 
-                if (!string.IsNullOrEmpty(richTextBox1.Text))
+                if (richTextBox1 != null && !string.IsNullOrEmpty(richTextBox1.Text))
                 {
                     Clipboard.SetText(richTextBox1.Rtf  , TextDataFormat.Rtf);
+                    //Clipboard.SetData(DataFormats.Rtf, richTextBox1.Rtf);
+
+                    // Copy the selected RTF content (or entire content if none selected) to the clipboard
+                    //Clipboard.SetText(richTextBox1.SelectedRtf.Length > 0 ? richTextBox1.SelectedRtf : richTextBox1.Rtf, TextDataFormat.Rtf);
+                                       
+
                 }
                 else
                 {
@@ -702,17 +712,22 @@ namespace Word_Music_Player
             
             if (richTextBox1.SelectionLength > 0)
             {
-
                 // Align selected text to the right
                 richTextBox1.SelectionAlignment = System.Windows.Forms.HorizontalAlignment.Left;
-
             }
             else
             {
-                // Align entire text to the right
-                richTextBox1.SelectAll();
+                // Align the line where the cursor is located to the left
+                int lineIndex = richTextBox1.GetLineFromCharIndex(richTextBox1.SelectionStart);
+                int lineStart = richTextBox1.GetFirstCharIndexFromLine(lineIndex);
+                int lineLength = richTextBox1.Lines[lineIndex].Length;
+
+                // Select the current line
+                richTextBox1.Select(lineStart, lineLength);
                 richTextBox1.SelectionAlignment = System.Windows.Forms.HorizontalAlignment.Left;
-                richTextBox1.DeselectAll();
+
+                // Deselect to restore the original cursor position
+                richTextBox1.Select(lineStart + lineLength, 0);
             }
         }
 
@@ -728,10 +743,17 @@ namespace Word_Music_Player
             }
             else
             {
-                // Align entire text to the right
-                richTextBox1.SelectAll();
+                // Align the line where the cursor is located to the left
+                int lineIndex = richTextBox1.GetLineFromCharIndex(richTextBox1.SelectionStart);
+                int lineStart = richTextBox1.GetFirstCharIndexFromLine(lineIndex);
+                int lineLength = richTextBox1.Lines[lineIndex].Length;
+
+                // Select the current line
+                richTextBox1.Select(lineStart, lineLength);
                 richTextBox1.SelectionAlignment = System.Windows.Forms.HorizontalAlignment.Center;
-                richTextBox1.DeselectAll();
+
+                // Deselect to restore the original cursor position
+                richTextBox1.Select(lineStart + lineLength, 0);
             }
         }
 
@@ -746,10 +768,42 @@ namespace Word_Music_Player
             }
             else
             {
-                // Align entire text to the right
-                richTextBox1.SelectAll();
+                // Align the line where the cursor is located to the left
+                int lineIndex = richTextBox1.GetLineFromCharIndex(richTextBox1.SelectionStart);
+                int lineStart = richTextBox1.GetFirstCharIndexFromLine(lineIndex);
+                int lineLength = richTextBox1.Lines[lineIndex].Length;
+
+                // Select the current line
+                richTextBox1.Select(lineStart, lineLength);
                 richTextBox1.SelectionAlignment = System.Windows.Forms.HorizontalAlignment.Right;
-                richTextBox1.DeselectAll();
+
+                // Deselect to restore the original cursor position
+                richTextBox1.Select(lineStart + lineLength, 0);
+            }
+        }
+        private void buttonBold_Click(object sender, EventArgs e)
+        {
+            if (richTextBox1.SelectionLength > 0)
+            {
+
+                // Align selected text to the right
+                richTextBox1.SelectionFont = new Font(richTextBox1.SelectionFont, FontStyle.Bold);
+
+            }
+            else
+            {
+                // Align the line where the cursor is located to the left
+                int lineIndex = richTextBox1.GetLineFromCharIndex(richTextBox1.SelectionStart);
+                int lineStart = richTextBox1.GetFirstCharIndexFromLine(lineIndex);
+                int lineLength = richTextBox1.Lines[lineIndex].Length;
+
+                // Select the current line
+                richTextBox1.Select(lineStart, lineLength);
+                // Set the font of the selected text to bold
+                richTextBox1.SelectionFont = new Font(richTextBox1.SelectionFont, FontStyle.Bold);
+
+                // Deselect to restore the original cursor position
+                richTextBox1.Select(lineStart + lineLength, 0);
             }
         }
 
@@ -799,6 +853,12 @@ namespace Word_Music_Player
             if (e.KeyCode == Keys.F4)
             {
                 _myPlayer.buttonStop_Click(null, EventArgs.Empty);
+                e.Handled = true;
+            }
+
+            if (e.Control && e.KeyCode == Keys.B)
+            {
+                buttonBold_Click(null, EventArgs.Empty);                
                 e.Handled = true;
             }
         }

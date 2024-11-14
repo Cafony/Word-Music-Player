@@ -100,9 +100,10 @@
             this.buttonTextLeft = new System.Windows.Forms.Button();
             this.buttonTextCenter = new System.Windows.Forms.Button();
             this.buttonTextRight = new System.Windows.Forms.Button();
+            this.buttonRemoveFormat = new System.Windows.Forms.Button();
             this.ComboBoxFont = new System.Windows.Forms.ComboBox();
             this.ComboBoxTextSize = new System.Windows.Forms.ComboBox();
-            this.buttonRemoveFormat = new System.Windows.Forms.Button();
+            this.buttonBold = new System.Windows.Forms.Button();
             this.contextMenuStrip.SuspendLayout();
             this.panelRight.SuspendLayout();
             this.panelChordEdit.SuspendLayout();
@@ -125,7 +126,7 @@
             this.panelDown.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelDown.Location = new System.Drawing.Point(0, 573);
             this.panelDown.Name = "panelDown";
-            this.panelDown.Size = new System.Drawing.Size(829, 138);
+            this.panelDown.Size = new System.Drawing.Size(903, 138);
             this.panelDown.TabIndex = 0;
             // 
             // richTextBox1
@@ -137,7 +138,7 @@
             this.richTextBox1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBox1.Location = new System.Drawing.Point(12, 81);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(547, 483);
+            this.richTextBox1.Size = new System.Drawing.Size(621, 483);
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "";
             this.richTextBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox1_KeyDown);
@@ -194,7 +195,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelRight.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.panelRight.Controls.Add(this.panelChordEdit);
-            this.panelRight.Location = new System.Drawing.Point(565, 84);
+            this.panelRight.Location = new System.Drawing.Point(639, 84);
             this.panelRight.Name = "panelRight";
             this.panelRight.Size = new System.Drawing.Size(264, 489);
             this.panelRight.TabIndex = 2;
@@ -668,7 +669,7 @@
             // buttonChordEditor
             // 
             this.buttonChordEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonChordEditor.Location = new System.Drawing.Point(706, 28);
+            this.buttonChordEditor.Location = new System.Drawing.Point(780, 28);
             this.buttonChordEditor.Name = "buttonChordEditor";
             this.buttonChordEditor.Size = new System.Drawing.Size(103, 32);
             this.buttonChordEditor.TabIndex = 3;
@@ -679,7 +680,7 @@
             // buttonPlaylist
             // 
             this.buttonPlaylist.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonPlaylist.Location = new System.Drawing.Point(598, 28);
+            this.buttonPlaylist.Location = new System.Drawing.Point(672, 28);
             this.buttonPlaylist.Name = "buttonPlaylist";
             this.buttonPlaylist.Size = new System.Drawing.Size(102, 32);
             this.buttonPlaylist.TabIndex = 4;
@@ -697,7 +698,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(829, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(903, 24);
             this.menuStrip1.TabIndex = 5;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -874,6 +875,17 @@
             this.buttonTextRight.UseVisualStyleBackColor = true;
             this.buttonTextRight.Click += new System.EventHandler(this.buttonTextRight_Click);
             // 
+            // buttonRemoveFormat
+            // 
+            this.buttonRemoveFormat.Image = ((System.Drawing.Image)(resources.GetObject("buttonRemoveFormat.Image")));
+            this.buttonRemoveFormat.Location = new System.Drawing.Point(559, 28);
+            this.buttonRemoveFormat.Name = "buttonRemoveFormat";
+            this.buttonRemoveFormat.Size = new System.Drawing.Size(32, 32);
+            this.buttonRemoveFormat.TabIndex = 19;
+            this.toolTip1.SetToolTip(this.buttonRemoveFormat, "Remove Format from  text");
+            this.buttonRemoveFormat.UseVisualStyleBackColor = true;
+            this.buttonRemoveFormat.Click += new System.EventHandler(this.buttonRemoveFormat_Click);
+            // 
             // ComboBoxFont
             // 
             this.ComboBoxFont.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -897,22 +909,23 @@
             this.ComboBoxTextSize.Text = "12";
             this.ComboBoxTextSize.SelectedIndexChanged += new System.EventHandler(this.ComboBoxTextSize_SelectedIndexChanged);
             // 
-            // buttonRemoveFormat
+            // buttonBold
             // 
-            this.buttonRemoveFormat.Image = ((System.Drawing.Image)(resources.GetObject("buttonRemoveFormat.Image")));
-            this.buttonRemoveFormat.Location = new System.Drawing.Point(559, 28);
-            this.buttonRemoveFormat.Name = "buttonRemoveFormat";
-            this.buttonRemoveFormat.Size = new System.Drawing.Size(32, 32);
-            this.buttonRemoveFormat.TabIndex = 19;
-            this.toolTip1.SetToolTip(this.buttonRemoveFormat, "Remove Format from  text");
-            this.buttonRemoveFormat.UseVisualStyleBackColor = true;
-            this.buttonRemoveFormat.Click += new System.EventHandler(this.buttonRemoveFormat_Click);
+            this.buttonBold.Image = ((System.Drawing.Image)(resources.GetObject("buttonBold.Image")));
+            this.buttonBold.Location = new System.Drawing.Point(597, 28);
+            this.buttonBold.Name = "buttonBold";
+            this.buttonBold.Size = new System.Drawing.Size(32, 32);
+            this.buttonBold.TabIndex = 20;
+            this.toolTip1.SetToolTip(this.buttonBold, "Ctrl+B\r\nAdd cursor in line to make Bold.");
+            this.buttonBold.UseVisualStyleBackColor = true;
+            this.buttonBold.Click += new System.EventHandler(this.buttonBold_Click);
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(829, 711);
+            this.ClientSize = new System.Drawing.Size(903, 711);
+            this.Controls.Add(this.buttonBold);
             this.Controls.Add(this.buttonRemoveFormat);
             this.Controls.Add(this.buttonTextRight);
             this.Controls.Add(this.buttonTextCenter);
@@ -1043,6 +1056,7 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeChordsFromSelectionToolStripMenuItem;
         private System.Windows.Forms.Button buttonRemoveFormat;
+        private System.Windows.Forms.Button buttonBold;
     }
 }
 

@@ -1,4 +1,5 @@
 ﻿using ManagedBass;
+using ManagedBass.Fx;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,8 +24,9 @@ namespace Word_Music_Player
         
         
         public Player()
-        {
+        {            
             InitializeComponent();
+            Bass.Init();            
             _myPlayerFuntions = new myPlayerFuntions();          
         }
 

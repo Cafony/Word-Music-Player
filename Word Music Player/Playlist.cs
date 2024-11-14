@@ -84,7 +84,7 @@ namespace Word_Music_Player
 
                 }
             }
-            else { MessageBox.Show("Can load Plaulist"); }
+            else { MessageBox.Show("Cant load Playlist"); }
 
         }
 

@@ -5,6 +5,8 @@ VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Word Music Player", "Word Music Player\Word Music Player.csproj", "{01913AF4-79B3-4C9C-8664-FDFEA3C3A3F3}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Word Music Player Installer", "Word Music Player Installer\Word Music Player Installer.vdproj", "{A6BC24E2-6D4F-4AF3-BB1C-38D7866EBEAF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{01913AF4-79B3-4C9C-8664-FDFEA3C3A3F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01913AF4-79B3-4C9C-8664-FDFEA3C3A3F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01913AF4-79B3-4C9C-8664-FDFEA3C3A3F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6BC24E2-6D4F-4AF3-BB1C-38D7866EBEAF}.Debug|Any CPU.ActiveCfg = Debug
+		{A6BC24E2-6D4F-4AF3-BB1C-38D7866EBEAF}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
