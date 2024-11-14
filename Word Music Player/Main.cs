@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -13,10 +14,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 
+
 namespace Word_Music_Player
 {
     public partial class Main : Form
     {
+        myPlayerFuntions _myPlayerFuntions;
+        Player _myPlayer;
         Playlist _Playlist;
         myOpenDocs _myOpenDocs;
         myTransposeChords _myTransposeChords;
@@ -31,10 +35,13 @@ namespace Word_Music_Player
         public static int _spaceNumbers;
 
         public Main()
-        {            
+        {
+            
             InitializeComponent();
             AddMp3PlayerToMain();
             AddPlaylistToMain();
+            _myPlayerFuntions = new myPlayerFuntions(); 
+            _myPlayer = new Player();
             _Playlist = new Playlist();
             _myOpenDocs = new myOpenDocs();
             _myTransposeChords = new myTransposeChords();        
@@ -45,6 +52,7 @@ namespace Word_Music_Player
             //==========================            
             LoadAvailableFontNames();
             LoadAvailableFontSizes();
+            
         }
         #endregion
 
@@ -190,28 +198,43 @@ namespace Word_Music_Player
         #region CONVERT CHORDS MENU
         private void radioButtonCifra_CheckedChanged(object sender, EventArgs e)
         {
-            UndoSaveContent();
-            if(radioButtonCifra.Checked)
+            if (string.IsNullOrEmpty(richTextBox1.Text))
             {
-                string line = richTextBox1.Text.Trim();
-                string output = myCifraFuntions.DoremiConvert(line);
-                richTextBox1.Text = output;
+                MessageBox.Show("Please add Lyrics with chords");
             }
-            myCifraFuntions.ChangeTextColor(richTextBox1, _color);
-
-            
+            else
+            {
+                if(radioButtonCifra.Checked)
+                {
+                    UndoSaveContent();
+                    string line = richTextBox1.Text.Trim();
+                    string output = myCifraFuntions.DoremiConvert(line);
+                    richTextBox1.Text = output;
+                }
+                myCifraFuntions.ChangeTextColor(richTextBox1, _color);
+            }
+            radioButtonCifra.Checked = false;            
         }
 
         private void radioButtonDoremi_CheckedChanged(object sender, EventArgs e)
         {
-            UndoSaveContent();
-            if(radioButtonDoremi.Checked)
+            if (!string.IsNullOrEmpty(richTextBox1.Text))
             {
-                string line = richTextBox1.Text;
-                string output = myCifraFuntions.CifraConvert(line);
-                richTextBox1.Text = output;
+                if(radioButtonDoremi.Checked)
+                {
+                    UndoSaveContent();
+                    string line = richTextBox1.Text;
+                    string output = myCifraFuntions.CifraConvert(line);
+                    richTextBox1.Text = output;
+                }
+                myCifraFuntions.ChangeTextColor(richTextBox1, _color);
             }
-            myCifraFuntions.ChangeTextColor(richTextBox1, _color);
+            else
+            {
+                MessageBox.Show("Please add a song with chords");
+            }
+
+            radioButtonDoremi.Checked= false;
 
         }
         #endregion
@@ -331,14 +354,14 @@ namespace Word_Music_Player
         #endregion
 
         #region UNDO
-        private void UndoSaveContent()
+        public void UndoSaveContent()
         {
             // Store the RichTextBox content in memory
             _richTextContent = richTextBox1.Text;
         }
                 
 
-        private void Undo()
+        public void Undo()
         {
             richTextBox1.Text= _richTextContent;
             myCifraFuntions.ChangeTextColor(richTextBox1 , _color); 
@@ -426,11 +449,7 @@ namespace Word_Music_Player
 
         #region MENU EDIT PREFERENCES
 
-        private void preferenciesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            myPreferences _preferences = new myPreferences();
-            _preferences.ShowDialog();
-        }
+
 
         #endregion
 
@@ -477,7 +496,6 @@ namespace Word_Music_Player
                 }
             
         }
-
         private void pasteChordsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UndoSaveContent();
@@ -531,52 +549,36 @@ namespace Word_Music_Player
         {
             UndoSaveContent();
 
-
                 string inputText = richTextBox1.SelectedText;
                 
                 string chordProText = myCifraFuntions.ConvertChordproToLyrics(inputText);
                 richTextBox1.SelectedText = chordProText;
-                radioButtonLyricsChordPro.Checked = false;
             
-
-            radioButtonChordproToLyrics.Checked = false;
+                radioButtonChordproToLyrics.Checked = false;
         }
 
         private void radioButtonLyricsToChordpro_CheckedChanged(object sender, EventArgs e)
         {
             UndoSaveContent();
-            if (richTextBox1.SelectedText == String.Empty)
-            {
-                MessageBox.Show("Select Lyrics with chord to convert to Chordpro");
-                radioButtonChordpro.Checked = false;
 
-            }
-            else
-            {
-                if (richTextBox1.SelectedText.Contains("["))
-                {
-                    string chordProInput = richTextBox1.SelectedText;
-                    //string formattedLyrics = myCifraFuntions.ConvertLyricsToChordPro(chordProInput);
-                    string formattedLyrics = myCifraFuntions.ConvertLyricsToChordpro(chordProInput);
+            string input = richTextBox1.SelectedText;
+            //string input = richTextBox1.Text;
 
-                    richTextBox1.SelectedText = formattedLyrics;
-                    radioButtonChordpro.Checked = false;
-                }
-                else
-                {
-                    MessageBox.Show("Lyrics are not in Chordpro Format" + "\n" + "(Chord inside brakets)" + "\n" + "Exemple:" + "\n" + "Happy birt[C]hday to you[G7]");
-                    radioButtonChordpro.Checked = false;
+            string result = myCifraFuntions.ConvertLyricsWithChordsToChordPro(input);
 
-                }
-
-            }
-
+            richTextBox1.SelectedText = result;
+            //richTextBox1.Text = result;
+            
             radioButtonLyricsToChordpro.Checked = false;
 
         }
         #endregion
 
         #region MENU TOP FONTS SIZE LOAD SAVE NEW
+        private void buttonRemoveFormat_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Clear();
+        }
         public void LoadAvailableFontSizes()
         {
             // Add some common font sizes
@@ -605,11 +607,13 @@ namespace Word_Music_Player
             {
                 string selectedFont = ComboBoxFont.SelectedItem.ToString();
                 richTextBox1.Font = new Font(selectedFont, richTextBox1.Font.Size);
+                myCifraFuntions.ChangeTextColor(richTextBox1,_color);                
             }
             else
             {
                 string selectedFont = ComboBoxFont.SelectedItem.ToString();
                 richTextBox1.SelectionFont = new Font(selectedFont, richTextBox1.SelectionFont.Size, richTextBox1.SelectionFont.Style);
+                myCifraFuntions.ChangeTextColor(richTextBox1, _color);
             }
             
         }
@@ -621,11 +625,13 @@ namespace Word_Music_Player
                 int size = Convert.ToInt32(ComboBoxTextSize.SelectedItem);
 
                 richTextBox1.Font = new Font(richTextBox1.Font.FontFamily, size);
+                myCifraFuntions.ChangeTextColor(richTextBox1, _color);
             }
             else
             {
                 int fontSize = Convert.ToInt32(ComboBoxTextSize.SelectedItem);
                 richTextBox1.SelectionFont = new Font(richTextBox1.Font.FontFamily, fontSize, richTextBox1.SelectionFont.Style);
+                myCifraFuntions.ChangeTextColor(richTextBox1, _color);
             }
             
         }
@@ -643,26 +649,49 @@ namespace Word_Music_Player
         }
         private void buttonCopyText_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(richTextBox1.Text))
+            try
             {
-                Clipboard.SetText(richTextBox1.Text, TextDataFormat.Text);
-            }
-            else
-            {
-                MessageBox.Show("There is not text to copy");
-            }
+
+                if (!string.IsNullOrEmpty(richTextBox1.Text))
+                {
+                    Clipboard.SetText(richTextBox1.Rtf  , TextDataFormat.Rtf);
+                }
+                else
+                {
+                    MessageBox.Show("There is no text to copy");
+                }
             
+            }
+            catch
+            {
+                return;
+            }
         }
         private void buttonPaste_Click(object sender, EventArgs e)
         {
-            if (Clipboard.ContainsText(TextDataFormat.Text))
+            try
             {
-                richTextBox1.Text=Clipboard.GetText(TextDataFormat.Text);
+                if (Clipboard.ContainsText(TextDataFormat.Rtf))
+                {
+                    // Paste as RTF if RTF is available
+                    richTextBox1.Rtf = Clipboard.GetText(TextDataFormat.Rtf);
+                }
+                else if (Clipboard.ContainsText(TextDataFormat.UnicodeText ))
+                {
+                    // Convert HTML to plain text if HTML is available
+                    richTextBox1.Text = Clipboard.GetText(TextDataFormat.UnicodeText);
+                }
+                else if (Clipboard.ContainsText(TextDataFormat.Text))
+                {
+                    // Fallback to plain text if no RTF or HTML is available
+                    richTextBox1.Text = Clipboard.GetText(TextDataFormat.Text);
+                }
+                else
+                {
+                    MessageBox.Show("There is no compatible text format in memory");
+                }
             }
-            else
-            {
-                MessageBox.Show("There is not text in memory");
-            }
+            catch { return; }
         }
         private void button_Undo_Click(object sender, EventArgs e)
         {
@@ -670,6 +699,7 @@ namespace Word_Music_Player
         }
         private void buttonTextLeft_Click(object sender, EventArgs e)
         {
+            
             if (richTextBox1.SelectionLength > 0)
             {
 
@@ -688,6 +718,7 @@ namespace Word_Music_Player
 
         private void buttonTextCenter_Click(object sender, EventArgs e)
         {
+            
             if (richTextBox1.SelectionLength > 0)
             {
 
@@ -724,6 +755,72 @@ namespace Word_Music_Player
 
 
         #endregion
+
+        #region MENUS HELP ABOUT
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            About about = new About();
+            about.ShowDialog();
+        }
+
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Help help = new Help(); 
+            help.ShowDialog();
+        }
+        #endregion
+
+        #region  ATALHOS KEYDOWN SHORTCUTS
+
+        private void Main_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.F1)
+            {
+
+                //_myPlayer.PlayButton();
+                _myPlayer.buttonPlay_Click(null, EventArgs.Empty);
+                e.Handled= true;                
+            }
+
+            if (e.KeyCode == Keys.F3) 
+            {
+                _myPlayer.PlayForward();                
+                e.Handled = true;
+            }
+
+            if (e.KeyCode == Keys.F2)
+            {
+                _myPlayer.PlayBackward();
+                e.Handled = true;
+            }
+
+
+            if (e.KeyCode == Keys.F4)
+            {
+                _myPlayer.buttonStop_Click(null, EventArgs.Empty);
+                e.Handled = true;
+            }
+        }
+
+
+        #endregion
+
+        private void richTextBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void removeChordsFromSelectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {            
+            string output = myCifraFuntions.RemoveChordsFromSelected(richTextBox1.SelectedText);
+            richTextBox1.SelectionColor = Color.Black;
+            // Make text not Bold
+            richTextBox1.SelectionFont = new Font(richTextBox1.Font, FontStyle.Regular);
+
+            richTextBox1.SelectedText = output;
+            
+        }
 
     }
 }

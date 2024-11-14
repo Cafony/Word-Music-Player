@@ -37,6 +37,7 @@
             this.joinLyricsWithChordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyChordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteChordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeChordsFromSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelRight = new System.Windows.Forms.Panel();
             this.panelChordEdit = new System.Windows.Forms.Panel();
             this.groupBoxChord_Pro = new System.Windows.Forms.GroupBox();
@@ -85,7 +86,8 @@
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recentDocsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.preferenciesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.labelDocName = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -94,12 +96,13 @@
             this.buttonNewDoc = new System.Windows.Forms.Button();
             this.buttonCopyText = new System.Windows.Forms.Button();
             this.button_Undo = new System.Windows.Forms.Button();
-            this.ComboBoxFont = new System.Windows.Forms.ComboBox();
-            this.ComboBoxTextSize = new System.Windows.Forms.ComboBox();
             this.buttonPaste = new System.Windows.Forms.Button();
             this.buttonTextLeft = new System.Windows.Forms.Button();
             this.buttonTextCenter = new System.Windows.Forms.Button();
             this.buttonTextRight = new System.Windows.Forms.Button();
+            this.ComboBoxFont = new System.Windows.Forms.ComboBox();
+            this.ComboBoxTextSize = new System.Windows.Forms.ComboBox();
+            this.buttonRemoveFormat = new System.Windows.Forms.Button();
             this.contextMenuStrip.SuspendLayout();
             this.panelRight.SuspendLayout();
             this.panelChordEdit.SuspendLayout();
@@ -120,9 +123,9 @@
             // 
             this.panelDown.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.panelDown.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelDown.Location = new System.Drawing.Point(0, 623);
+            this.panelDown.Location = new System.Drawing.Point(0, 573);
             this.panelDown.Name = "panelDown";
-            this.panelDown.Size = new System.Drawing.Size(1064, 138);
+            this.panelDown.Size = new System.Drawing.Size(829, 138);
             this.panelDown.TabIndex = 0;
             // 
             // richTextBox1
@@ -131,12 +134,13 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBox1.ContextMenuStrip = this.contextMenuStrip;
-            this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBox1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBox1.Location = new System.Drawing.Point(12, 81);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(782, 535);
+            this.richTextBox1.Size = new System.Drawing.Size(547, 483);
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "";
+            this.richTextBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox1_KeyDown);
             // 
             // contextMenuStrip
             // 
@@ -144,37 +148,45 @@
             this.joinLyrcsToolStripMenuItem,
             this.joinLyricsWithChordsToolStripMenuItem,
             this.copyChordsToolStripMenuItem,
-            this.pasteChordsToolStripMenuItem});
+            this.pasteChordsToolStripMenuItem,
+            this.removeChordsFromSelectionToolStripMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip2";
-            this.contextMenuStrip.Size = new System.Drawing.Size(197, 92);
+            this.contextMenuStrip.Size = new System.Drawing.Size(239, 114);
             // 
             // joinLyrcsToolStripMenuItem
             // 
             this.joinLyrcsToolStripMenuItem.Name = "joinLyrcsToolStripMenuItem";
-            this.joinLyrcsToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.joinLyrcsToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.joinLyrcsToolStripMenuItem.Text = "Join Lyrics";
             this.joinLyrcsToolStripMenuItem.Click += new System.EventHandler(this.joinLyrcsToolStripMenuItem_Click);
             // 
             // joinLyricsWithChordsToolStripMenuItem
             // 
             this.joinLyricsWithChordsToolStripMenuItem.Name = "joinLyricsWithChordsToolStripMenuItem";
-            this.joinLyricsWithChordsToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.joinLyricsWithChordsToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.joinLyricsWithChordsToolStripMenuItem.Text = "Join Lyrics With Chords";
             this.joinLyricsWithChordsToolStripMenuItem.Click += new System.EventHandler(this.joinLyricsWithChordsToolStripMenuItem_Click);
             // 
             // copyChordsToolStripMenuItem
             // 
             this.copyChordsToolStripMenuItem.Name = "copyChordsToolStripMenuItem";
-            this.copyChordsToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.copyChordsToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.copyChordsToolStripMenuItem.Text = "Copy Chords";
             this.copyChordsToolStripMenuItem.Click += new System.EventHandler(this.copyChordsToolStripMenuItem_Click);
             // 
             // pasteChordsToolStripMenuItem
             // 
             this.pasteChordsToolStripMenuItem.Name = "pasteChordsToolStripMenuItem";
-            this.pasteChordsToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.pasteChordsToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.pasteChordsToolStripMenuItem.Text = "Paste Chords";
             this.pasteChordsToolStripMenuItem.Click += new System.EventHandler(this.pasteChordsToolStripMenuItem_Click);
+            // 
+            // removeChordsFromSelectionToolStripMenuItem
+            // 
+            this.removeChordsFromSelectionToolStripMenuItem.Name = "removeChordsFromSelectionToolStripMenuItem";
+            this.removeChordsFromSelectionToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.removeChordsFromSelectionToolStripMenuItem.Text = "Remove Chords from Selection";
+            this.removeChordsFromSelectionToolStripMenuItem.Click += new System.EventHandler(this.removeChordsFromSelectionToolStripMenuItem_Click);
             // 
             // panelRight
             // 
@@ -182,9 +194,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelRight.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.panelRight.Controls.Add(this.panelChordEdit);
-            this.panelRight.Location = new System.Drawing.Point(800, 84);
+            this.panelRight.Location = new System.Drawing.Point(565, 84);
             this.panelRight.Name = "panelRight";
-            this.panelRight.Size = new System.Drawing.Size(264, 539);
+            this.panelRight.Size = new System.Drawing.Size(264, 489);
             this.panelRight.TabIndex = 2;
             // 
             // panelChordEdit
@@ -203,7 +215,7 @@
             this.panelChordEdit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelChordEdit.Location = new System.Drawing.Point(0, 0);
             this.panelChordEdit.Name = "panelChordEdit";
-            this.panelChordEdit.Size = new System.Drawing.Size(264, 539);
+            this.panelChordEdit.Size = new System.Drawing.Size(264, 489);
             this.panelChordEdit.TabIndex = 6;
             this.panelChordEdit.Visible = false;
             // 
@@ -480,7 +492,7 @@
             this.groupBoxChordEdit.Size = new System.Drawing.Size(200, 147);
             this.groupBoxChordEdit.TabIndex = 5;
             this.groupBoxChordEdit.TabStop = false;
-            this.groupBoxChordEdit.Text = "Chord Edit";
+            this.groupBoxChordEdit.Text = "Chord Editor";
             // 
             // radioButtonAdd_Spaces
             // 
@@ -656,9 +668,9 @@
             // buttonChordEditor
             // 
             this.buttonChordEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonChordEditor.Location = new System.Drawing.Point(945, 36);
+            this.buttonChordEditor.Location = new System.Drawing.Point(706, 28);
             this.buttonChordEditor.Name = "buttonChordEditor";
-            this.buttonChordEditor.Size = new System.Drawing.Size(82, 32);
+            this.buttonChordEditor.Size = new System.Drawing.Size(103, 32);
             this.buttonChordEditor.TabIndex = 3;
             this.buttonChordEditor.Text = "Chord Editor";
             this.buttonChordEditor.UseVisualStyleBackColor = true;
@@ -667,9 +679,9 @@
             // buttonPlaylist
             // 
             this.buttonPlaylist.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonPlaylist.Location = new System.Drawing.Point(827, 37);
+            this.buttonPlaylist.Location = new System.Drawing.Point(598, 28);
             this.buttonPlaylist.Name = "buttonPlaylist";
-            this.buttonPlaylist.Size = new System.Drawing.Size(75, 32);
+            this.buttonPlaylist.Size = new System.Drawing.Size(102, 32);
             this.buttonPlaylist.TabIndex = 4;
             this.buttonPlaylist.Text = "Playlist";
             this.buttonPlaylist.UseVisualStyleBackColor = true;
@@ -680,10 +692,12 @@
             this.menuStrip1.BackColor = System.Drawing.SystemColors.ControlDark;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.editToolStripMenuItem});
+            this.editToolStripMenuItem,
+            this.aboutToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1064, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(829, 24);
             this.menuStrip1.TabIndex = 5;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -701,46 +715,51 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // recentDocsToolStripMenuItem
             // 
             this.recentDocsToolStripMenuItem.Name = "recentDocsToolStripMenuItem";
-            this.recentDocsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.recentDocsToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.recentDocsToolStripMenuItem.Text = "Recent Files";
             this.recentDocsToolStripMenuItem.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.recentDocsToolStripMenuItem_DropDownItemClicked);
             this.recentDocsToolStripMenuItem.Click += new System.EventHandler(this.recentDocsToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
-            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.preferenciesToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "Edit";
             // 
-            // preferenciesToolStripMenuItem
+            // aboutToolStripMenuItem
             // 
-            this.preferenciesToolStripMenuItem.Name = "preferenciesToolStripMenuItem";
-            this.preferenciesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.preferenciesToolStripMenuItem.Text = "Preferences";
-            this.preferenciesToolStripMenuItem.Click += new System.EventHandler(this.preferenciesToolStripMenuItem_Click);
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
             // contextMenuStrip1
             // 
@@ -811,29 +830,6 @@
             this.button_Undo.UseVisualStyleBackColor = true;
             this.button_Undo.Click += new System.EventHandler(this.button_Undo_Click);
             // 
-            // ComboBoxFont
-            // 
-            this.ComboBoxFont.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ComboBoxFont.FormattingEnabled = true;
-            this.ComboBoxFont.Location = new System.Drawing.Point(177, 33);
-            this.ComboBoxFont.Name = "ComboBoxFont";
-            this.ComboBoxFont.Size = new System.Drawing.Size(148, 24);
-            this.ComboBoxFont.Sorted = true;
-            this.ComboBoxFont.TabIndex = 13;
-            this.ComboBoxFont.Text = "Microsoft Sans Serif";
-            this.ComboBoxFont.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // ComboBoxTextSize
-            // 
-            this.ComboBoxTextSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ComboBoxTextSize.FormattingEnabled = true;
-            this.ComboBoxTextSize.Location = new System.Drawing.Point(129, 33);
-            this.ComboBoxTextSize.Name = "ComboBoxTextSize";
-            this.ComboBoxTextSize.Size = new System.Drawing.Size(42, 24);
-            this.ComboBoxTextSize.TabIndex = 14;
-            this.ComboBoxTextSize.Text = "12";
-            this.ComboBoxTextSize.SelectedIndexChanged += new System.EventHandler(this.ComboBoxTextSize_SelectedIndexChanged);
-            // 
             // buttonPaste
             // 
             this.buttonPaste.Image = ((System.Drawing.Image)(resources.GetObject("buttonPaste.Image")));
@@ -878,11 +874,46 @@
             this.buttonTextRight.UseVisualStyleBackColor = true;
             this.buttonTextRight.Click += new System.EventHandler(this.buttonTextRight_Click);
             // 
+            // ComboBoxFont
+            // 
+            this.ComboBoxFont.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ComboBoxFont.FormattingEnabled = true;
+            this.ComboBoxFont.Location = new System.Drawing.Point(177, 33);
+            this.ComboBoxFont.Name = "ComboBoxFont";
+            this.ComboBoxFont.Size = new System.Drawing.Size(148, 24);
+            this.ComboBoxFont.Sorted = true;
+            this.ComboBoxFont.TabIndex = 13;
+            this.ComboBoxFont.Text = "Microsoft Sans Serif";
+            this.ComboBoxFont.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // ComboBoxTextSize
+            // 
+            this.ComboBoxTextSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ComboBoxTextSize.FormattingEnabled = true;
+            this.ComboBoxTextSize.Location = new System.Drawing.Point(129, 33);
+            this.ComboBoxTextSize.Name = "ComboBoxTextSize";
+            this.ComboBoxTextSize.Size = new System.Drawing.Size(42, 24);
+            this.ComboBoxTextSize.TabIndex = 14;
+            this.ComboBoxTextSize.Text = "12";
+            this.ComboBoxTextSize.SelectedIndexChanged += new System.EventHandler(this.ComboBoxTextSize_SelectedIndexChanged);
+            // 
+            // buttonRemoveFormat
+            // 
+            this.buttonRemoveFormat.Image = ((System.Drawing.Image)(resources.GetObject("buttonRemoveFormat.Image")));
+            this.buttonRemoveFormat.Location = new System.Drawing.Point(559, 28);
+            this.buttonRemoveFormat.Name = "buttonRemoveFormat";
+            this.buttonRemoveFormat.Size = new System.Drawing.Size(32, 32);
+            this.buttonRemoveFormat.TabIndex = 19;
+            this.toolTip1.SetToolTip(this.buttonRemoveFormat, "Remove Format from  text");
+            this.buttonRemoveFormat.UseVisualStyleBackColor = true;
+            this.buttonRemoveFormat.Click += new System.EventHandler(this.buttonRemoveFormat_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1064, 761);
+            this.ClientSize = new System.Drawing.Size(829, 711);
+            this.Controls.Add(this.buttonRemoveFormat);
             this.Controls.Add(this.buttonTextRight);
             this.Controls.Add(this.buttonTextCenter);
             this.Controls.Add(this.buttonTextLeft);
@@ -901,13 +932,15 @@
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.panelDown);
             this.Controls.Add(this.menuStrip1);
+            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(1080, 750);
+            this.MinimumSize = new System.Drawing.Size(845, 750);
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Word Music Player";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Main_FormClosed);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Main_KeyDown);
             this.contextMenuStrip.ResumeLayout(false);
             this.panelRight.ResumeLayout(false);
             this.panelChordEdit.ResumeLayout(false);
@@ -973,7 +1006,6 @@
         private System.Windows.Forms.RadioButton radioButtonGreen;
         private System.Windows.Forms.Label labelConvertTabs;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem preferenciesToolStripMenuItem;
         private System.Windows.Forms.RadioButton radioButtonYellow;
         private System.Windows.Forms.RadioButton radioButtonRose;
         private System.Windows.Forms.GroupBox groupBoxChord;
@@ -1007,6 +1039,10 @@
         private System.Windows.Forms.Button buttonTextLeft;
         private System.Windows.Forms.Button buttonTextCenter;
         private System.Windows.Forms.Button buttonTextRight;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removeChordsFromSelectionToolStripMenuItem;
+        private System.Windows.Forms.Button buttonRemoveFormat;
     }
 }
 

@@ -43,13 +43,12 @@
             this.listBoxPlaylist.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listBoxPlaylist.FormattingEnabled = true;
-            this.listBoxPlaylist.Location = new System.Drawing.Point(11, 12);
+            this.listBoxPlaylist.Location = new System.Drawing.Point(11, 37);
             this.listBoxPlaylist.Name = "listBoxPlaylist";
             this.listBoxPlaylist.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.listBoxPlaylist.Size = new System.Drawing.Size(245, 407);
             this.listBoxPlaylist.TabIndex = 0;
             this.listBoxPlaylist.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listBoxPlaylist_MouseClick);
-            this.listBoxPlaylist.SelectedIndexChanged += new System.EventHandler(this.listBoxPlaylist_SelectedIndexChanged);
             this.listBoxPlaylist.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.listBoxPlaylist_Format);
             this.listBoxPlaylist.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBoxPlaylist_KeyDown);
             this.listBoxPlaylist.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBoxPlaylist_MouseDoubleClick);
@@ -57,7 +56,7 @@
             // buttonAddFiles
             // 
             this.buttonAddFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddFiles.Location = new System.Drawing.Point(11, 425);
+            this.buttonAddFiles.Location = new System.Drawing.Point(11, 450);
             this.buttonAddFiles.Name = "buttonAddFiles";
             this.buttonAddFiles.Size = new System.Drawing.Size(110, 29);
             this.buttonAddFiles.TabIndex = 1;
@@ -68,7 +67,7 @@
             // buttonRemoveListIten
             // 
             this.buttonRemoveListIten.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonRemoveListIten.Location = new System.Drawing.Point(146, 425);
+            this.buttonRemoveListIten.Location = new System.Drawing.Point(146, 450);
             this.buttonRemoveListIten.Name = "buttonRemoveListIten";
             this.buttonRemoveListIten.Size = new System.Drawing.Size(110, 29);
             this.buttonRemoveListIten.TabIndex = 3;
@@ -98,7 +97,7 @@
             // buttonClearList
             // 
             this.buttonClearList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonClearList.Location = new System.Drawing.Point(11, 460);
+            this.buttonClearList.Location = new System.Drawing.Point(11, 485);
             this.buttonClearList.Name = "buttonClearList";
             this.buttonClearList.Size = new System.Drawing.Size(110, 29);
             this.buttonClearList.TabIndex = 6;
@@ -109,7 +108,7 @@
             // buttonSaveList
             // 
             this.buttonSaveList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSaveList.Location = new System.Drawing.Point(146, 460);
+            this.buttonSaveList.Location = new System.Drawing.Point(146, 485);
             this.buttonSaveList.Name = "buttonSaveList";
             this.buttonSaveList.Size = new System.Drawing.Size(110, 29);
             this.buttonSaveList.TabIndex = 7;
@@ -119,11 +118,13 @@
             // 
             // labelMusicPlaylist
             // 
-            this.labelMusicPlaylist.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelMusicPlaylist.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelMusicPlaylist.AutoSize = true;
-            this.labelMusicPlaylist.Location = new System.Drawing.Point(13, 496);
+            this.labelMusicPlaylist.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelMusicPlaylist.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.labelMusicPlaylist.Location = new System.Drawing.Point(8, 19);
             this.labelMusicPlaylist.Name = "labelMusicPlaylist";
-            this.labelMusicPlaylist.Size = new System.Drawing.Size(35, 13);
+            this.labelMusicPlaylist.Size = new System.Drawing.Size(35, 14);
             this.labelMusicPlaylist.TabIndex = 8;
             this.labelMusicPlaylist.Text = "Music";
             // 

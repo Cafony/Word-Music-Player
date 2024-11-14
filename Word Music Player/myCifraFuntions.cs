@@ -10,8 +10,8 @@ using System.Windows.Forms;
 namespace Word_Music_Player
 {
     internal class myCifraFuntions
-    {
-
+    {     
+        
         private static Dictionary<string, string> Cifra_Doremi_Dictionary = new Dictionary<string, string>
         {
                 { "D", "Re" },
@@ -335,14 +335,39 @@ namespace Word_Music_Player
             return sb.ToString();
         }
 
+        public static string RemoveChordsFromSelected(string inputText)
+        {
+            // Split the selected text into lines
+            string[] lines = inputText.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
+
+            // Create a list to store the even-numbered lines (index-based, so 1st line is 0 index)
+            List<string> evenLines = new List<string>();
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                // If the line index is even, add it to the list (0-based index)
+                if (i % 2 != 0) // Odd lines are at odd indices in a 0-based index system
+                {
+                    evenLines.Add(lines[i]);
+                }
+            }
+
+            // Join the even lines back into a single string
+            string newText = string.Join("\n", evenLines);
+            
+            return newText;
+        }
+
         #endregion
 
         #region CHORD PRO CONVERT FUNTIOS
 
         public static string ConvertChordproToLyrics(string chordPro)
         {
-            //var lines = chordPro.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-            var lines = chordPro.Split(new[] { "\n" }, StringSplitOptions.None);
+            RemoveTabs(chordPro);
+
+            var lines = chordPro.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            //var lines = chordPro.Split(new[] { "\n" }, StringSplitOptions.None);
             var result = new System.Text.StringBuilder();
             foreach (var line in lines)
             {
@@ -375,14 +400,13 @@ namespace Word_Music_Player
                     }
                     else
                     {
-                        ///lyricsLine.Append(line[i]);
-                        //chordsLine.Append(' ');
+                        lyricsLine.Append(line[i]);
+                        chordsLine.Append(' ');
                         i++;
                     }
                 }
                 else
                 {
-
                     lyricsLine.Append(line[i]);
                     chordsLine.Append(' '); // Espacos em branco da linha de acordes
                     i++;
@@ -446,7 +470,62 @@ namespace Word_Music_Player
                             if (endIndex > lyricsLine.Length)
                             {
                                 int posicao = lyricsLine[j];
-                                result.Append("SAIU");
+                                result.Append("");
+                            }
+                            string chord = chordsLine.Substring(chordIndex, endIndex - chordIndex).Trim();
+
+                            result.Append($"[{chord}]");
+                            chordIndex = endIndex;
+
+                        }
+                        else
+                        {
+                            chordIndex++;
+                        }
+                        result.Append(lyricsLine[j]);
+                    }
+                    result.AppendLine();
+                }
+            }
+
+            return result.ToString().TrimEnd('\n');
+            //richTextBox.Text = result.ToString().TrimEnd('\n');
+        }
+
+        public static string ConvertLyricsWithChordsToChordPro(string songText)
+        {
+            
+            
+            RemoveTabs(songText);
+
+            //string songText = richTextBox.Text;
+            string[] lines = songText.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            StringBuilder result = new StringBuilder();
+
+            for (int i = 0; i < lines.Length; i += 2)
+            {
+                if (i + 1 < lines.Length)
+                {
+
+                    string chordsLine = lines[i];         // Linha de Acordes
+                    string lyricsLine = lines[i + 1];     // Linha de Lyrics
+                    int chordIndex = 0;
+
+                    for (int j = 0; j < lyricsLine.Length; j++)   // Passa por cada caracter
+                    {
+                        if (chordIndex < chordsLine.Length && chordsLine[chordIndex] != ' ')
+                        {
+                            int endIndex = chordIndex;
+
+                            while (endIndex < chordsLine.Length && chordsLine[endIndex] != ' ')
+                            {
+                                endIndex++;
+                            }
+
+                            if (endIndex > lyricsLine.Length)
+                            {
+                                int posicao = lyricsLine[j];
+                                result.Append("");
                             }
                             string chord = chordsLine.Substring(chordIndex, endIndex - chordIndex).Trim();
 
@@ -469,7 +548,6 @@ namespace Word_Music_Player
         }
 
         #endregion
-
 
 
     }

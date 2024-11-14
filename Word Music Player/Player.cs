@@ -14,7 +14,7 @@ namespace Word_Music_Player
 {
     public partial class Player : Form
     {
-
+        
         public static  string _filePath;
         private float _volume;
         public bool _isPlaying;
@@ -25,21 +25,24 @@ namespace Word_Music_Player
         public Player()
         {
             InitializeComponent();
-            _myPlayerFuntions = new myPlayerFuntions();
-            
-        
+            _myPlayerFuntions = new myPlayerFuntions();          
         }
 
-        private void ResetPlayerValues()
+        public void ResetPlayerValues()
         {
             trackBarTranspose.Value = 0;
             labelTransposeValue.Text = "0";
-            trackBarEqGain.Value = 0;
-            labelGain.Text = "0";
+                        
             trackBarSpeed.Value = 0;
             trackBarSpeed.Text = "0";   
+            
             buttonPlay.Text = "Play";
             checkBoxStereo.Checked = true;
+            
+            labelGain.Text = "0";
+            checkBoxEqualizer.Checked = false;
+            trackBarEqGain.Value = 0;
+
         }
 
         // Play File that was send from Playlist
@@ -58,45 +61,88 @@ namespace Word_Music_Player
             {                  
                     _filePath = openFile.FileName;
                     _myPlayerFuntions.CreateStream(_filePath);
-                    labelName.Text = _filePath;
+                    labelMusicName.Text = _filePath;
             }
 
         }
-
-        public void FileToPlay(string file)
+        public void PlayForward()
         {
-                _filePath = file;
+            try
+            {
+                if (trackBarPosition.Value < trackBarPosition.Maximum)
+                {
+                    trackBarPosition.Value += 2;
 
-            if(!_isPlaying)
-            {
-                labelName.Text = _filePath;
-                _myPlayerFuntions.CreateStream(_filePath);
+                    if(trackBarPosition.Value > trackBarPosition.Maximum)
+                    {
+                        trackBarPosition.Value = trackBarPosition.Maximum;
+                    }
+
+                    _myPlayerFuntions.trackbarScrollPosition(trackBarPosition.Value, trackBarPosition.Maximum);
+                 
+                }         
             }
-            else
+            catch { return; }
+        }
+        public void PlayBackward()
+        {
+            try
             {
-                _myPlayerFuntions.StopMP3();
-                _isPlaying = false;
+                if (trackBarPosition.Value > trackBarPosition.Minimum)
+                {
+                    trackBarPosition.Value -= 2;
+
+                    if (trackBarPosition.Value < trackBarPosition.Minimum)
+                    {
+                        trackBarPosition.Value = trackBarPosition.Minimum;
+                    }
+
+                    _myPlayerFuntions.trackbarScrollPosition(trackBarPosition.Value, trackBarPosition.Maximum);
+
+                }
+            }
+            catch { return ; }
+        }
+
+        public void trackBarPosition_Scroll(object sender, EventArgs e)
+        {
+            if (!_myPlayerFuntions.IfStreamIsNull())
+            {
+                if(_isPlaying)
+                {
+                        _myPlayerFuntions.trackbarScrollPosition(trackBarPosition.Value, trackBarPosition.Maximum);
+                }
             }
         }
-        private void buttonPlay_Click(object sender, EventArgs e)
-        {                             
+
+        public  void buttonPlay_Click(object sender, EventArgs e)
+        {
+            // Check if there is a stream 
+            if (!_myPlayerFuntions.IfStreamIsNull())
+            {
+
                 if (!_isPlaying)
                 {
+                    buttonPlay.Text = "Pause";                  
                     checkBoxStereo.Checked = true;
                     _myPlayerFuntions.PlayStream();                    
                     _isPlaying = true;
-                    buttonPlay.Text = "Pause";                  
 
                 }
                 else 
                 {
+                    buttonPlay.Text = "Play";                   
                     _myPlayerFuntions.PauseStream();
                     _isPlaying = false;
-                    buttonPlay.Text = "Play";                   
                 }
+            }
+            else
+            {
+                MessageBox.Show("No music is playing");
+            }
         }
 
-        private void buttonStop_Click(object sender, EventArgs e)
+        public void buttonStop_Click(object sender, EventArgs e)
         {
 
                 _myPlayerFuntions.StopMP3();
@@ -104,14 +150,6 @@ namespace Word_Music_Player
                 _isPlaying = false;
                 trackBarPosition.Value = 0;
 
-        }
-
-        private void trackBarPosition_Scroll(object sender, EventArgs e)
-        {
-            if(_isPlaying)
-            {
-                    _myPlayerFuntions.trackbarScrollPosition(trackBarPosition.Value, trackBarPosition.Maximum);
-            }
         }
         private void trackBarVolume_Scroll(object sender, EventArgs e)
         {
@@ -133,7 +171,7 @@ namespace Word_Music_Player
             if (checkBoxLeft.Checked)
             {
                 // Play left channel
-                //_myPlayerFuntions.PlayMono(true);
+                //_myPlayerFuntions.PlayMono4(false);
                 _myPlayerFuntions.PlayLeft();
                 checkBoxRight.Checked = false;
                 checkBoxStereo.Checked = false;
@@ -144,11 +182,10 @@ namespace Word_Music_Player
         {
             if (checkBoxStereo.Checked)
             {
-
+                _myPlayerFuntions.playStereo();
                 checkBoxRight.Checked = false;
                 checkBoxLeft.Checked = false;
                 checkBoxStereo.Checked = true;
-                _myPlayerFuntions.PlayMono(false, true);
             }
         }
 
@@ -157,9 +194,8 @@ namespace Word_Music_Player
 
             if (checkBoxRight.Checked)
             {
-
                 // Play Right Channel
-                _myPlayerFuntions.PlayMono(false);
+                _myPlayerFuntions.PlayRight();
                 checkBoxLeft.Checked = false;
                 checkBoxStereo.Checked = false;
             }
@@ -171,17 +207,17 @@ namespace Word_Music_Player
 
         private void trackBarTranspose_Scroll(object sender, EventArgs e)
         {
-            labelName.Text=_isPlaying.ToString();
-
-            if (_isPlaying)
-            {
-                trackBarTranspose.Value = 0;
-                MessageBox.Show("No music playing");
-            }
-            else
+            //labelMusicName.Text=_isPlaying.ToString();
+            
+            if (!_isPlaying)
             {
                 _myPlayerFuntions.PitchMP3(trackBarTranspose.Value);
                 labelTransposeValue.Text=trackBarTranspose.Value.ToString();
+            }
+            else
+            {
+                trackBarTranspose.Value = 0;
+                MessageBox.Show("No music playing");
             }
         }
 
@@ -203,7 +239,7 @@ namespace Word_Music_Player
         #region EQUALIZATION
         private void trackBarEqGain_Scroll(object sender, EventArgs e)
         {
-            if (_isPlaying)
+            if (!_isPlaying)
             {
                 int fGain = trackBarEqGain.Value;
                 int freq =  trackBarFreq.Value;
@@ -220,22 +256,28 @@ namespace Word_Music_Player
 
         private void checkBoxEqualizer_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBoxEqualizer.Checked)
-            {
+            if (checkBoxEqualizer.Checked==true)
+            {               
                 float fGain = (float)trackBarEqGain.Value;
                 float freq = (float)trackBarFreq.Value;
 
                 // Send Values To myPlayer Class
                 _myPlayerFuntions.TrackbarValuesEQ(fGain, freq);
                 _myPlayerFuntions.Equalizer_ON_OFF(true);
-                _myPlayerFuntions.Equalizer(fGain, freq);
-
+                _myPlayerFuntions.Equalizer(fGain, freq);                           
             }
-            else
+            else if(checkBoxEqualizer.Checked==false)
             {
+                float fGain = 0f;
+                float freq = (float)trackBarFreq.Value;
+
+                // Send Values To myPlayer Class
+                _myPlayerFuntions.TrackbarValuesEQ(fGain, freq);
                 _myPlayerFuntions.Equalizer_ON_OFF(false);
+                _myPlayerFuntions.Equalizer(fGain, freq);
             }
         }
+
 
         private void trackBarFrequency_Scroll(object sender, EventArgs e)
         {
@@ -249,8 +291,13 @@ namespace Word_Music_Player
             labelGain.Text = fGain.ToString();
             _myPlayerFuntions.Equalizer(fGain, freq);
         }
+
+
         #endregion
 
+        private void labelFreq_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

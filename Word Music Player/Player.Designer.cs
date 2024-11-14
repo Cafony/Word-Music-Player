@@ -50,7 +50,7 @@
             this.labelTransposeValue = new System.Windows.Forms.Label();
             this.labelSpeed = new System.Windows.Forms.Label();
             this.labelSpeedValue = new System.Windows.Forms.Label();
-            this.labelName = new System.Windows.Forms.Label();
+            this.labelMusicName = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPosition)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTranspose)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSpeed)).BeginInit();
@@ -95,17 +95,17 @@
             // trackBarPosition
             // 
             this.trackBarPosition.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.trackBarPosition.Location = new System.Drawing.Point(129, 32);
+            this.trackBarPosition.Location = new System.Drawing.Point(93, 32);
             this.trackBarPosition.Maximum = 100;
             this.trackBarPosition.Name = "trackBarPosition";
-            this.trackBarPosition.Size = new System.Drawing.Size(623, 45);
+            this.trackBarPosition.Size = new System.Drawing.Size(417, 45);
             this.trackBarPosition.TabIndex = 3;
             this.trackBarPosition.Scroll += new System.EventHandler(this.trackBarPosition_Scroll);
             // 
             // trackBarTranspose
             // 
             this.trackBarTranspose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.trackBarTranspose.Location = new System.Drawing.Point(129, 87);
+            this.trackBarTranspose.Location = new System.Drawing.Point(93, 87);
             this.trackBarTranspose.Maximum = 6;
             this.trackBarTranspose.Minimum = -6;
             this.trackBarTranspose.Name = "trackBarTranspose";
@@ -116,7 +116,7 @@
             // trackBarSpeed
             // 
             this.trackBarSpeed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.trackBarSpeed.Location = new System.Drawing.Point(549, 83);
+            this.trackBarSpeed.Location = new System.Drawing.Point(307, 87);
             this.trackBarSpeed.Maximum = 50;
             this.trackBarSpeed.Minimum = -50;
             this.trackBarSpeed.Name = "trackBarSpeed";
@@ -127,7 +127,7 @@
             // trackBarVolume
             // 
             this.trackBarVolume.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.trackBarVolume.Location = new System.Drawing.Point(949, 87);
+            this.trackBarVolume.Location = new System.Drawing.Point(660, 87);
             this.trackBarVolume.Maximum = 64;
             this.trackBarVolume.Name = "trackBarVolume";
             this.trackBarVolume.Size = new System.Drawing.Size(119, 45);
@@ -141,7 +141,7 @@
             this.checkBoxRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxRight.AutoSize = true;
             this.checkBoxRight.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.checkBoxRight.Location = new System.Drawing.Point(1032, 46);
+            this.checkBoxRight.Location = new System.Drawing.Point(743, 32);
             this.checkBoxRight.Name = "checkBoxRight";
             this.checkBoxRight.Size = new System.Drawing.Size(36, 31);
             this.checkBoxRight.TabIndex = 7;
@@ -156,7 +156,7 @@
             this.checkBoxStereo.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.checkBoxStereo.Checked = true;
             this.checkBoxStereo.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxStereo.Location = new System.Drawing.Point(984, 46);
+            this.checkBoxStereo.Location = new System.Drawing.Point(695, 32);
             this.checkBoxStereo.Name = "checkBoxStereo";
             this.checkBoxStereo.Size = new System.Drawing.Size(42, 31);
             this.checkBoxStereo.TabIndex = 8;
@@ -169,7 +169,7 @@
             this.checkBoxLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxLeft.AutoSize = true;
             this.checkBoxLeft.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.checkBoxLeft.Location = new System.Drawing.Point(949, 46);
+            this.checkBoxLeft.Location = new System.Drawing.Point(660, 32);
             this.checkBoxLeft.Name = "checkBoxLeft";
             this.checkBoxLeft.Size = new System.Drawing.Size(29, 31);
             this.checkBoxLeft.TabIndex = 9;
@@ -181,19 +181,20 @@
             // 
             this.checkBoxEqualizer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxEqualizer.AutoSize = true;
-            this.checkBoxEqualizer.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.checkBoxEqualizer.Location = new System.Drawing.Point(862, 12);
+            this.checkBoxEqualizer.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxEqualizer.Location = new System.Drawing.Point(519, 13);
             this.checkBoxEqualizer.Name = "checkBoxEqualizer";
-            this.checkBoxEqualizer.Size = new System.Drawing.Size(50, 31);
+            this.checkBoxEqualizer.Size = new System.Drawing.Size(65, 17);
             this.checkBoxEqualizer.TabIndex = 10;
             this.checkBoxEqualizer.Text = "On / Off";
+            this.checkBoxEqualizer.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBoxEqualizer.UseVisualStyleBackColor = true;
             this.checkBoxEqualizer.CheckedChanged += new System.EventHandler(this.checkBoxEqualizer_CheckedChanged);
             // 
             // trackBarEqGain
             // 
             this.trackBarEqGain.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.trackBarEqGain.Location = new System.Drawing.Point(783, 49);
+            this.trackBarEqGain.Location = new System.Drawing.Point(510, 32);
             this.trackBarEqGain.Maximum = 15;
             this.trackBarEqGain.Minimum = -15;
             this.trackBarEqGain.Name = "trackBarEqGain";
@@ -204,7 +205,7 @@
             // trackBarFreq
             // 
             this.trackBarFreq.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.trackBarFreq.Location = new System.Drawing.Point(783, 97);
+            this.trackBarFreq.Location = new System.Drawing.Point(510, 87);
             this.trackBarFreq.Maximum = 5000;
             this.trackBarFreq.Minimum = 100;
             this.trackBarFreq.Name = "trackBarFreq";
@@ -223,27 +224,17 @@
             // 
             this.labelGain.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.labelGain.AutoSize = true;
-            this.labelGain.Location = new System.Drawing.Point(789, 37);
+            this.labelGain.Location = new System.Drawing.Point(614, 17);
             this.labelGain.Name = "labelGain";
             this.labelGain.Size = new System.Drawing.Size(29, 13);
             this.labelGain.TabIndex = 13;
             this.labelGain.Text = "Gain";
             // 
-            // labelFreq
-            // 
-            this.labelFreq.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelFreq.AutoSize = true;
-            this.labelFreq.Location = new System.Drawing.Point(789, 81);
-            this.labelFreq.Name = "labelFreq";
-            this.labelFreq.Size = new System.Drawing.Size(57, 13);
-            this.labelFreq.TabIndex = 14;
-            this.labelFreq.Text = "Frequency";
-            // 
             // labelVolume
             // 
             this.labelVolume.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.labelVolume.AutoSize = true;
-            this.labelVolume.Location = new System.Drawing.Point(949, 122);
+            this.labelVolume.Location = new System.Drawing.Point(680, 122);
             this.labelVolume.Name = "labelVolume";
             this.labelVolume.Size = new System.Drawing.Size(42, 13);
             this.labelVolume.TabIndex = 15;
@@ -252,7 +243,7 @@
             // labelTranspose
             // 
             this.labelTranspose.AutoSize = true;
-            this.labelTranspose.Location = new System.Drawing.Point(138, 119);
+            this.labelTranspose.Location = new System.Drawing.Point(102, 122);
             this.labelTranspose.Name = "labelTranspose";
             this.labelTranspose.Size = new System.Drawing.Size(57, 13);
             this.labelTranspose.TabIndex = 17;
@@ -261,7 +252,7 @@
             // labelTransposeValue
             // 
             this.labelTransposeValue.AutoSize = true;
-            this.labelTransposeValue.Location = new System.Drawing.Point(224, 121);
+            this.labelTransposeValue.Location = new System.Drawing.Point(188, 121);
             this.labelTransposeValue.Name = "labelTransposeValue";
             this.labelTransposeValue.Size = new System.Drawing.Size(13, 13);
             this.labelTransposeValue.TabIndex = 18;
@@ -270,7 +261,7 @@
             // labelSpeed
             // 
             this.labelSpeed.AutoSize = true;
-            this.labelSpeed.Location = new System.Drawing.Point(556, 114);
+            this.labelSpeed.Location = new System.Drawing.Point(304, 122);
             this.labelSpeed.Name = "labelSpeed";
             this.labelSpeed.Size = new System.Drawing.Size(38, 13);
             this.labelSpeed.TabIndex = 19;
@@ -279,28 +270,28 @@
             // labelSpeedValue
             // 
             this.labelSpeedValue.AutoSize = true;
-            this.labelSpeedValue.Location = new System.Drawing.Point(643, 114);
+            this.labelSpeedValue.Location = new System.Drawing.Point(449, 118);
             this.labelSpeedValue.Name = "labelSpeedValue";
             this.labelSpeedValue.Size = new System.Drawing.Size(13, 13);
             this.labelSpeedValue.TabIndex = 20;
             this.labelSpeedValue.Text = "0";
             // 
-            // labelName
+            // labelMusicName
             // 
-            this.labelName.AutoSize = true;
-            this.labelName.Location = new System.Drawing.Point(141, 13);
-            this.labelName.Name = "labelName";
-            this.labelName.Size = new System.Drawing.Size(57, 13);
-            this.labelName.TabIndex = 21;
-            this.labelName.Text = "labelName";
+            this.labelMusicName.AutoSize = true;
+            this.labelMusicName.Location = new System.Drawing.Point(102, 9);
+            this.labelMusicName.Name = "labelMusicName";
+            this.labelMusicName.Size = new System.Drawing.Size(35, 13);
+            this.labelMusicName.TabIndex = 21;
+            this.labelMusicName.Text = "Music";
             // 
             // Player
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.ClientSize = new System.Drawing.Size(1080, 144);
-            this.Controls.Add(this.labelName);
+            this.ClientSize = new System.Drawing.Size(791, 144);
+            this.Controls.Add(this.labelMusicName);
             this.Controls.Add(this.labelSpeedValue);
             this.Controls.Add(this.labelSpeed);
             this.Controls.Add(this.labelTransposeValue);
@@ -358,6 +349,6 @@
         private System.Windows.Forms.Label labelTransposeValue;
         private System.Windows.Forms.Label labelSpeed;
         private System.Windows.Forms.Label labelSpeedValue;
-        private System.Windows.Forms.Label labelName;
+        private System.Windows.Forms.Label labelMusicName;
     }
 }

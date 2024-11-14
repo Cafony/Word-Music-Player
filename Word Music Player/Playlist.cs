@@ -13,8 +13,10 @@ namespace Word_Music_Player
 {
     public partial class Playlist : Form
     {
-        private Player _Player;
+        
+        private Player _myPlayer;
         private myPlayerFuntions _myPlayerFuntions;
+        
 
         //private myPlayerFuntions _myPlayerFuntions;
         private string _playlistDefaultPath = System.IO.Path.Combine(Application.StartupPath, "playlist.txt");
@@ -22,7 +24,8 @@ namespace Word_Music_Player
         public Playlist()
         {
             InitializeComponent();
-            _Player = new Player();
+            
+            _myPlayer = new Player();
             _myPlayerFuntions = new myPlayerFuntions();
         }
 
@@ -102,11 +105,6 @@ namespace Word_Music_Player
             catch { MessageBox.Show("Cant save playlist"); }
 
         }
-        
-        private void buttonLoadPlaylist_Click(object sender, EventArgs e)
-        {
-            LoadPlaylist();
-        }
 
         public void buttonSaveList_Click(object sender, EventArgs e)
         {
@@ -153,28 +151,24 @@ namespace Word_Music_Player
 
         #region SEND FILE TO PLAYER
 
-        private void listBoxPlaylist_SelectedIndexChanged(object sender, EventArgs e)
-        {
-             
-        }
-
         private void listBoxPlaylist_MouseClick(object sender, MouseEventArgs e)
-        {
+        {                        
             try
             {
-            string file = listBoxPlaylist.SelectedItem.ToString();
-            labelMusicPlaylist.Text = file;
+                string file = listBoxPlaylist.SelectedItem.ToString();                
+                string name= Path.GetFileName(file);
+                labelMusicPlaylist.Text = name;                
             }
             catch { MessageBox.Show("Select Music"); }
         }
             
         private void PlayListboxFile()
         {
-            _myPlayerFuntions.StopMP3();
-                 
+            _myPlayer.ResetPlayerValues(); // Nao está a funcionar
+            _myPlayerFuntions.StopMP3();                 
             _myPlayerFuntions.CreateStream(listBoxPlaylist.SelectedItem.ToString());
             _myPlayerFuntions.PlayStream();
-            _Player._isPlaying = true;
+            _myPlayer._isPlaying = true;
         }
             
         private void listBoxPlaylist_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -230,11 +224,8 @@ namespace Word_Music_Player
             {
                 LoadPlaylist();
             }
-        }
 
-
-        private void buttonSend_Click(object sender, EventArgs e)
-        {
+            
         }
 
     }
